@@ -44,8 +44,10 @@ dist/
 /web/coverage/
 /web/.temp/
 /web/.umi/
+/web/src/.umi/
 /web/.umi-production/
 /web/.umi-test/
+/web/.husky/
 /web/.firebase/
 /web/screenshot/
 /web/_roadhog-api-doc/
