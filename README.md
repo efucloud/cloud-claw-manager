@@ -24,6 +24,11 @@ This repository uses a unified full-stack layout:
 - User and admin dashboards
 - No business database; state is aggregated from Kubernetes resources
 
+## Authentication
+
+This project uses an OIDC provider compatible with the open-source `eauth` project:  
+[efucloud/eauth](https://github.com/efucloud/eauth)
+
 ## Repository Structure
 
 ```text

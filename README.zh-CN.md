@@ -24,6 +24,11 @@ Cloud Claw Manager 是一个面向 Kubernetes 的 OpenClaw 实例管理平台。
 - 用户与管理员双看板能力
 - 无业务数据库，状态直接来源于 Kubernetes 资源
 
+## 认证系统
+
+本项目使用兼容 OIDC 的开源认证系统 `eauth`：  
+[efucloud/eauth](https://github.com/efucloud/eauth)
+
 ## 目录结构
 
 ```text
