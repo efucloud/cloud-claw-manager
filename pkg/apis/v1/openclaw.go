@@ -28,6 +28,7 @@ func (r OpenClawResource) AddWebService(ws *restful.WebService) {
 		Doc("获取当前用户可访问 OpenClaw 实例概览").
 		Notes("基于 OpenClaw 模板下发后的 Kubernetes 资源聚合实例信息").
 		Param(ws.QueryParameter("namespace", "按 namespace 过滤（可选）")).
+		Param(ws.QueryParameter("includeGatewayToken", "是否返回实例 gateway token（可选，默认 true）")).
 		Returns(http.StatusOK, "请求成功", openclaw.OpenClawDashboardResponse{}).
 		Returns(http.StatusUnauthorized, "未认证", dtos.ResponseError{}).
 		Returns(http.StatusInternalServerError, "内部处理逻辑错误", dtos.ResponseError{}).
@@ -132,7 +133,8 @@ func (r OpenClawResource) dashboard(req *restful.Request, resp *restful.Response
 		writeOpenClawError(resp, err)
 		return
 	}
-	common.ResponseSuccess(resp, buildDashboardFromInstances(list.Data))
+	includeGatewayToken := parseBoolQueryWithDefault(req.QueryParameter("includeGatewayToken"), true)
+	common.ResponseSuccess(resp, buildDashboardFromInstances(list.Data, includeGatewayToken))
 }
 
 func (r OpenClawResource) listInstances(req *restful.Request, resp *restful.Response) {
@@ -301,7 +303,7 @@ func (r OpenClawResource) updateTemplate(req *restful.Request, resp *restful.Res
 	common.ResponseSuccess(resp, data)
 }
 
-func buildDashboardFromInstances(instances []openclaw.OpenClawInstance) openclaw.OpenClawDashboardResponse {
+func buildDashboardFromInstances(instances []openclaw.OpenClawInstance, includeGatewayToken bool) openclaw.OpenClawDashboardResponse {
 	resp := openclaw.OpenClawDashboardResponse{
 		Overview: openclaw.OpenClawOverview{
 			TotalInstances: len(instances),
@@ -323,6 +325,10 @@ func buildDashboardFromInstances(instances []openclaw.OpenClawInstance) openclaw
 			resp.Overview.AccessibleInstances++
 		}
 		resp.Overview.ReadyPods += readyPods
+		gatewayToken := ""
+		if includeGatewayToken {
+			gatewayToken = strings.TrimSpace(item.Status.GatewayToken)
+		}
 		resp.Instances = append(resp.Instances, openclaw.OpenClawInstanceTelemetry{
 			Namespace:          item.Namespace,
 			Name:               item.Name,
@@ -335,7 +341,7 @@ func buildDashboardFromInstances(instances []openclaw.OpenClawInstance) openclaw
 			ReadyPods:          readyPods,
 			Provider:           provider,
 			Endpoint:           strings.TrimSpace(item.Status.Endpoint),
-			GatewayToken:       strings.TrimSpace(item.Status.GatewayToken),
+			GatewayToken:       gatewayToken,
 			ProviderCandidates: providerCandidates,
 			ProviderPrimary:    strings.TrimSpace(item.Models.Primary),
 			ProviderModelIDs:   providerModelIDs,
@@ -355,6 +361,21 @@ func buildDashboardFromInstances(instances []openclaw.OpenClawInstance) openclaw
 		return resp.Providers[i].Requests > resp.Providers[j].Requests
 	})
 	return resp
+}
+
+func parseBoolQueryWithDefault(raw string, def bool) bool {
+	value := strings.TrimSpace(strings.ToLower(raw))
+	if value == "" {
+		return def
+	}
+	switch value {
+	case "1", "true", "yes", "y", "on":
+		return true
+	case "0", "false", "no", "n", "off":
+		return false
+	default:
+		return def
+	}
 }
 
 func providerFromInstance(instance openclaw.OpenClawInstance) string {

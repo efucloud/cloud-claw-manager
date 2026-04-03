@@ -34,7 +34,7 @@ const OpenClawAdminDashboardPage: React.FC = () => {
   const loadData = useCallback(async () => {
     setLoading(true);
     try {
-      const resp = await openclawDashboard<DashboardResponse>();
+      const resp = await openclawDashboard<DashboardResponse>({ includeGatewayToken: false });
       const payload = (resp as any)?.data || resp;
       setData(payload || {});
     } catch (_error) {

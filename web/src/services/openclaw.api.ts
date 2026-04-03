@@ -22,6 +22,7 @@ export type OpenClawInstanceCreateRequest = {
 export async function openclawDashboard<T>(
   params?: {
     namespace?: string;
+    includeGatewayToken?: boolean;
   },
   options?: { [key: string]: any },
 ) {
