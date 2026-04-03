@@ -1,0 +1,192 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: openclaw
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cloud-claw-manager-config
+  namespace: openclaw
+type: Opaque
+stringData:
+  config.yaml: |
+    logConfig:
+      level: info
+      filename: /efucloud/log/cloud-claw-manager.log
+    oidcConfig:
+      clientId: REPLACE_ME_OIDC_CLIENT_ID
+      clientSecret: REPLACE_ME_OIDC_CLIENT_SECRET
+      issuer: https://eauth.efucloud.com
+    openClawControl:
+      previewBaseDomain: openclawefucloud.com
+      adminEmails:
+        - admin@efucloud.com
+      ingressEnabled: true
+      ingressClassName: nginx
+      ingressPath: /
+      ingressPathType: Prefix
+      ingressTlsEnabled: true
+      ingressTlsSecretName: openclawefucloud-com-tls
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cloud-claw-manager
+  namespace: openclaw
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cloud-claw-manager
+rules:
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["configmaps", "secrets", "services", "serviceaccounts", "persistentvolumeclaims", "pods"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete", "deletecollection"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "statefulsets", "daemonsets", "replicasets"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete", "deletecollection"]
+  - apiGroups: ["batch"]
+    resources: ["jobs", "cronjobs"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete", "deletecollection"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete", "deletecollection"]
+  - apiGroups: ["policy"]
+    resources: ["poddisruptionbudgets"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete", "deletecollection"]
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources: ["roles", "rolebindings"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete", "deletecollection"]
+  - apiGroups: ["coordination.k8s.io"]
+    resources: ["leases"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cloud-claw-manager
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cloud-claw-manager
+subjects:
+  - kind: ServiceAccount
+    name: cloud-claw-manager
+    namespace: openclaw
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-claw-manager
+  namespace: openclaw
+  labels:
+    app.kubernetes.io/name: cloud-claw-manager
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: cloud-claw-manager
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: cloud-claw-manager
+    spec:
+      serviceAccountName: cloud-claw-manager
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: cloud-claw-manager
+          image: ghcr.io/efucloud/cloud-claw-manager:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 9008
+              protocol: TCP
+          volumeMounts:
+            - name: app-config
+              mountPath: /efucloud/config/config.yaml
+              subPath: config.yaml
+              readOnly: true
+            - name: app-log
+              mountPath: /efucloud/log
+            - name: app-tmp
+              mountPath: /tmp
+          livenessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 3
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi
+      volumes:
+        - name: app-config
+          secret:
+            secretName: cloud-claw-manager-config
+            items:
+              - key: config.yaml
+                path: config.yaml
+        - name: app-log
+          emptyDir: {}
+        - name: app-tmp
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloud-claw-manager
+  namespace: openclaw
+  labels:
+    app.kubernetes.io/name: cloud-claw-manager
+spec:
+  selector:
+    app.kubernetes.io/name: cloud-claw-manager
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: http
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cloud-claw-manager
+  namespace: openclaw
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "30"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: dashboard.openclaw.openclawefucloud.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: cloud-claw-manager
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - dashboard.openclaw.openclawefucloud.com
+      secretName: openclawefucloud-com-tls
