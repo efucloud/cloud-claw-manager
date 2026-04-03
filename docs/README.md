@@ -31,3 +31,10 @@ kubectl apply -f docs/openclaw-template-enterprise.yaml
 - Ingress 参数由后端配置注入：
   - `ingressEnabled` / `ingressClassName` / `ingressPath` / `ingressPathType`
   - `ingressTlsEnabled` / `ingressTlsSecretName`
+- OpenClaw Control UI 配对说明：
+  - 中文：本仓库模板默认设置 `controlUi.dangerouslyDisableDeviceAuth=false`，建议保持为 `false`（尤其是生产环境）。
+  - English: This template defaults `controlUi.dangerouslyDisableDeviceAuth=false`; keeping it `false` is recommended, especially in production.
+  - 中文：当该值为 `false` 时，首次访问控制台可能出现 `pairing required`，需要管理员手动进入对应 Pod 执行 approve 后才能登录 UI。
+  - English: When set to `false`, first-time UI access may show `pairing required`; an admin must exec into the target Pod and approve pairing before login.
+  - 中文：仅在受控内网的临时调试场景可设置为 `true`（跳过配对/approve）。
+  - English: Set it to `true` only for temporary debugging in a trusted internal environment (skip pairing/approve).
