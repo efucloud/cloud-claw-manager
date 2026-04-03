@@ -68,7 +68,7 @@ const OpenClawPreviewGrid: React.FC<Props> = ({ instances }) => {
               const endpoint = buildPreviewURL(item.endpoint, item.gatewayToken);
               const previewable = isPreviewable(endpoint);
               return (
-                <Col xs={24} md={12} xl={8} key={buildKey(item)}>
+                <Col xs={24} md={12} lg={12} xl={12} key={buildKey(item)}>
                   <Card
                     size="small"
                     className={styles.instanceCard}
@@ -103,13 +103,15 @@ const OpenClawPreviewGrid: React.FC<Props> = ({ instances }) => {
                   >
                     <div className={styles.frameWrap}>
                       {previewable ? (
-                        <iframe
-                          className={styles.frame}
-                          src={endpoint}
-                          title={`preview-${buildKey(item)}`}
-                          loading="lazy"
-                          sandbox="allow-forms allow-modals allow-pointer-lock allow-popups allow-same-origin allow-scripts"
-                        />
+                        <div className={styles.frameViewport}>
+                          <iframe
+                            className={styles.frame}
+                            src={endpoint}
+                            title={`preview-${buildKey(item)}`}
+                            loading="lazy"
+                            sandbox="allow-forms allow-modals allow-pointer-lock allow-popups allow-same-origin allow-scripts"
+                          />
+                        </div>
                       ) : (
                         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={intl.formatMessage({ id: 'pages.openclaw.preview.endpoint.missing' })} />
                       )}
