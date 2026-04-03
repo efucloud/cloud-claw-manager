@@ -192,9 +192,10 @@ func IsTemplateAdmin(email string) bool {
 	return false
 }
 
-func InjectOpenClawOwnershipLabels(resources []runtime.RawExtension, owner, instance string) ([]runtime.RawExtension, error) {
+func InjectOpenClawOwnershipLabels(resources []runtime.RawExtension, owner, instance, templateRef string) ([]runtime.RawExtension, error) {
 	owner = strings.TrimSpace(owner)
 	instance = strings.TrimSpace(instance)
+	templateRef = strings.TrimSpace(templateRef)
 	if len(resources) == 0 {
 		return resources, nil
 	}
@@ -215,6 +216,9 @@ func InjectOpenClawOwnershipLabels(resources []runtime.RawExtension, owner, inst
 		}
 		if instance != "" {
 			labels[openClawResourceLabelInstance] = instance
+		}
+		if templateRef != "" {
+			labels[OpenClawInstanceLabelTemplateRef] = templateRef
 		}
 		meta["labels"] = labels
 		obj["metadata"] = meta

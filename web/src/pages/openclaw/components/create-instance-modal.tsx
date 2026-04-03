@@ -354,7 +354,7 @@ const OpenClawCreateInstanceModal: React.FC<Props> = ({ visible, onClose, onCrea
               {templates.map((item) => {
                 const selected = item.name === selectedTemplateName;
                 return (
-                  <Col xs={24} md={12} key={item.name}>
+                  <Col xs={24} md={12} key={item.name} className={styles.templateCol}>
                     <Card
                       hoverable
                       className={`${styles.templateCard} ${selected ? styles.templateCardSelected : ''}`}

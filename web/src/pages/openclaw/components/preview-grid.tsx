@@ -1,6 +1,6 @@
-import { CopyOutlined, ExpandOutlined, LinkOutlined } from '@ant-design/icons';
+import { ExpandOutlined, LinkOutlined } from '@ant-design/icons';
 import { useIntl } from '@umijs/max';
-import { Button, Card, Col, Empty, Modal, Row, Space, Tag, Typography, message } from 'antd';
+import { Button, Card, Col, Empty, Modal, Row, Space, Tag } from 'antd';
 import React, { useMemo, useState } from 'react';
 import type { InstanceTelemetry } from '../types';
 import styles from './preview-grid.less';
@@ -27,19 +27,21 @@ const isPreviewable = (raw?: string) => {
   }
 };
 
-const buildPreviewURL = (raw?: string) => {
+const buildPreviewURL = (raw?: string, token?: string) => {
   const endpoint = normalizeURL(raw);
   if (!endpoint) return '';
-  return endpoint;
-};
-
-const maskToken = (raw?: string) => {
-  const value = String(raw || '').trim();
-  if (!value) return '';
-  if (value.length <= 8) {
-    return `${value.slice(0, 2)}***${value.slice(-2)}`;
+  const tokenValue = String(token || '').trim();
+  if (!tokenValue) {
+    return endpoint;
   }
-  return `${value.slice(0, 4)}***${value.slice(-4)}`;
+  try {
+    const url = new URL(endpoint);
+    url.searchParams.set('token', tokenValue);
+    return url.toString();
+  } catch (_err) {
+    const sep = endpoint.includes('?') ? '&' : '?';
+    return `${endpoint}${sep}token=${encodeURIComponent(tokenValue)}`;
+  }
 };
 
 const buildKey = (item: InstanceTelemetry) => `${item.namespace || 'ns'}-${item.name || 'name'}`;
@@ -52,7 +54,7 @@ const OpenClawPreviewGrid: React.FC<Props> = ({ instances }) => {
     () => instances.filter((item) => String(item.accessible) === 'true' || item.accessible),
     [instances],
   );
-  const activeEndpoint = active ? buildPreviewURL(active.endpoint) : '';
+  const activeEndpoint = active ? buildPreviewURL(active.endpoint, active.gatewayToken) : '';
   const activePreviewable = active ? isPreviewable(activeEndpoint) : false;
 
   return (
@@ -63,9 +65,8 @@ const OpenClawPreviewGrid: React.FC<Props> = ({ instances }) => {
         ) : (
           <Row gutter={[12, 12]}>
             {items.map((item) => {
-              const endpoint = buildPreviewURL(item.endpoint);
+              const endpoint = buildPreviewURL(item.endpoint, item.gatewayToken);
               const previewable = isPreviewable(endpoint);
-              const gatewayToken = String(item.gatewayToken || '').trim();
               return (
                 <Col xs={24} md={12} xl={8} key={buildKey(item)}>
                   <Card
@@ -113,28 +114,6 @@ const OpenClawPreviewGrid: React.FC<Props> = ({ instances }) => {
                         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={intl.formatMessage({ id: 'pages.openclaw.preview.endpoint.missing' })} />
                       )}
                     </div>
-                    {gatewayToken ? (
-                      <div className={styles.tokenRow}>
-                        <Typography.Text type="secondary" className={styles.tokenText}>
-                          {intl.formatMessage({ id: 'pages.openclaw.preview.token.label' })}: {maskToken(gatewayToken)}
-                        </Typography.Text>
-                        <Button
-                          size="small"
-                          icon={<CopyOutlined />}
-                          className={styles.tokenCopyButton}
-                          onClick={async () => {
-                            try {
-                              await navigator.clipboard.writeText(gatewayToken);
-                              message.success(intl.formatMessage({ id: 'pages.copy.success' }));
-                            } catch (_err) {
-                              message.error(intl.formatMessage({ id: 'pages.copy.failed' }));
-                            }
-                          }}
-                        >
-                          {intl.formatMessage({ id: 'pages.openclaw.preview.token.copy' })}
-                        </Button>
-                      </div>
-                    ) : null}
                   </Card>
                 </Col>
               );

@@ -161,7 +161,7 @@ spec:
   ports:
     - name: http
       protocol: TCP
-      port: 80
+      port: 9008
       targetPort: http
 ---
 apiVersion: networking.k8s.io/v1
@@ -185,7 +185,7 @@ spec:
               service:
                 name: cloud-claw-manager
                 port:
-                  number: 80
+                  number: 9008
   tls:
     - hosts:
         - dashboard.openclaw.openclawefucloud.com

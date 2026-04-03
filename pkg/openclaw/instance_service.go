@@ -31,27 +31,28 @@ import (
 )
 
 const (
-	OpenClawInstanceLabelOwnerID    = "efucloud.com/openclaw.owner.id"
-	OpenClawInstanceLabelOwner      = "efucloud.com/openclaw.owner"
-	OpenClawInstanceLabelInstance   = "efucloud.com/openclaw.instance"
-	OpenClawInstanceLabelManagedBy  = "efucloud.com/openclaw.managed-by"
-	openClawDefaultManagedByValue   = "cloud-claw-manager"
-	openClawRestartedAtAnnotation   = "efucloud.com/openclaw.restartedAt"
-	openClawInstanceStateAnnotation = "efucloud.com/openclaw.instance.state"
-	openClawGeneratedNameLength     = 6
-	openClawGeneratedNamePrefix     = "openclaw-"
-	openClawGatewayTokenLength      = 20
-	openClawGatewayTokenSecretName  = "efucloud.com/openclaw.gateway-token.secret-name"
-	openClawGatewayTokenSecretKey   = "efucloud.com/openclaw.gateway-token.secret-key"
-	openClawGatewayTokenDataKey     = "OPENCLAW_GATEWAY_TOKEN"
-	openClawEndpointAnnotation      = "efucloud.com/openclaw.endpoint"
-	openClawDisplayNameAnnotation   = "efucloud.com/openclaw.display-name"
-	openClawPurposeAnnotation       = "efucloud.com/openclaw.purpose"
-	openClawOwnerAnnotation         = "efucloud.com/openclaw.owner"
-	openClawOwnerIDAnnotation       = "efucloud.com/openclaw.owner.id"
-	openClawOwnerUsernameAnnotation = "efucloud.com/openclaw.owner.username"
-	openClawOwnerEmailAnnotation    = "efucloud.com/openclaw.owner.email"
-	openClawInstanceAnnotation      = "efucloud.com/openclaw.instance"
+	OpenClawInstanceLabelOwnerID     = "efucloud.com/openclaw.owner.id"
+	OpenClawInstanceLabelOwner       = "efucloud.com/openclaw.owner"
+	OpenClawInstanceLabelInstance    = "efucloud.com/openclaw.instance"
+	OpenClawInstanceLabelTemplateRef = "efucloud.com/openclaw.template-ref"
+	OpenClawInstanceLabelManagedBy   = "efucloud.com/openclaw.managed-by"
+	openClawDefaultManagedByValue    = "cloud-claw-manager"
+	openClawRestartedAtAnnotation    = "efucloud.com/openclaw.restartedAt"
+	openClawInstanceStateAnnotation  = "efucloud.com/openclaw.instance.state"
+	openClawGeneratedNameLength      = 6
+	openClawGeneratedNamePrefix      = "openclaw-"
+	openClawGatewayTokenLength       = 20
+	openClawGatewayTokenSecretName   = "efucloud.com/openclaw.gateway-token.secret-name"
+	openClawGatewayTokenSecretKey    = "efucloud.com/openclaw.gateway-token.secret-key"
+	openClawGatewayTokenDataKey      = "OPENCLAW_GATEWAY_TOKEN"
+	openClawEndpointAnnotation       = "efucloud.com/openclaw.endpoint"
+	openClawDisplayNameAnnotation    = "efucloud.com/openclaw.display-name"
+	openClawPurposeAnnotation        = "efucloud.com/openclaw.purpose"
+	openClawOwnerAnnotation          = "efucloud.com/openclaw.owner"
+	openClawOwnerIDAnnotation        = "efucloud.com/openclaw.owner.id"
+	openClawOwnerUsernameAnnotation  = "efucloud.com/openclaw.owner.username"
+	openClawOwnerEmailAnnotation     = "efucloud.com/openclaw.owner.email"
+	openClawInstanceAnnotation       = "efucloud.com/openclaw.instance"
 )
 
 var (
@@ -428,7 +429,8 @@ func (s OpenClawInstanceService) CreateInstance(ctx context.Context, requesterID
 	templateValues["previewEndpoint"] = previewEndpoint
 	// Ingress 模版可直接引用 host，避免在模板中做 URL 解析。
 	templateValues["previewHost"] = extractEndpointHost(previewEndpoint)
-	if templateRef := strings.TrimSpace(req.TemplateRef); templateRef != "" {
+	templateRef := strings.TrimSpace(req.TemplateRef)
+	if templateRef != "" {
 		rendered, renderErr := (OpenClawTemplateService{}).RenderTemplate(ctx, templateRef, templateValues)
 		if renderErr != nil {
 			return OpenClawInstance{}, renderErr
@@ -459,7 +461,7 @@ func (s OpenClawInstanceService) CreateInstance(ctx context.Context, requesterID
 	if gatewayTokenRef != nil {
 		req.Gateway.TokenSecretRef = gatewayTokenRef
 	}
-	templateSpec.Resources, err = InjectOpenClawOwnershipLabels(templateSpec.Resources, requesterID, name)
+	templateSpec.Resources, err = InjectOpenClawOwnershipLabels(templateSpec.Resources, requesterID, name, templateRef)
 	if err != nil {
 		return OpenClawInstance{}, err
 	}
@@ -500,12 +502,16 @@ func (s OpenClawInstanceService) CreateInstance(ctx context.Context, requesterID
 		resourceAnnotations[openClawGatewayTokenSecretName] = gatewayTokenRef.Name
 		resourceAnnotations[openClawGatewayTokenSecretKey] = gatewayTokenRef.Key
 	}
-	if err = applyTemplateResources(ctx, dc, disco, namespace, templateSpec.Resources, map[string]string{
+	resourceLabels := map[string]string{
 		OpenClawInstanceLabelOwnerID:   requesterID,
 		OpenClawInstanceLabelOwner:     requesterID,
 		OpenClawInstanceLabelInstance:  name,
 		OpenClawInstanceLabelManagedBy: openClawDefaultManagedByValue,
-	}, resourceAnnotations); err != nil {
+	}
+	if templateRef != "" {
+		resourceLabels[OpenClawInstanceLabelTemplateRef] = templateRef
+	}
+	if err = applyTemplateResources(ctx, dc, disco, namespace, templateSpec.Resources, resourceLabels, resourceAnnotations); err != nil {
 		return OpenClawInstance{}, err
 	}
 	return s.GetInstance(ctx, requesterID, namespace, name)
@@ -899,6 +905,9 @@ func applyTemplateResources(
 		OpenClawInstanceLabelOwner:    strings.TrimSpace(labels[OpenClawInstanceLabelOwner]),
 		OpenClawInstanceLabelOwnerID:  strings.TrimSpace(labels[OpenClawInstanceLabelOwnerID]),
 		OpenClawInstanceLabelInstance: strings.TrimSpace(labels[OpenClawInstanceLabelInstance]),
+	}
+	if templateRef := strings.TrimSpace(labels[OpenClawInstanceLabelTemplateRef]); templateRef != "" {
+		identityLabels[OpenClawInstanceLabelTemplateRef] = templateRef
 	}
 	identityAnnotations := map[string]string{
 		openClawOwnerAnnotation:         strings.TrimSpace(annotations[openClawOwnerAnnotation]),

@@ -71,8 +71,8 @@ data:
             "controlUi": {
               "enabled": true,
               "allowInsecureAuth": false,
-              "dangerouslyDisableDeviceAuth": false,
-              "allowedOrigins": ["https://dashboard.openclaw.openclawefucloud.com", "https://*.openclawefucloud.com"]
+              "dangerouslyDisableDeviceAuth": true,
+              "allowedOrigins": ["*"]
             }
           },
           "models": {

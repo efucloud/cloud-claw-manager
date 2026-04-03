@@ -4,12 +4,15 @@
 
 1. `openclaw-template-enterprise.yaml`：OpenClaw 实例模板（含 `PVC + Service + Ingress`）。
 2. `openclaw-shared-model-secret.yaml`：公用模型 API Key Secret（供所有 OpenClaw 实例共享）。
+3. `openclaw-template-cloud-ide.yaml`：云端 IDE 开发模板（内置 DevOps/React/Golang 多 Agent 协作配置）。
 
 ## 使用顺序
 
 ```bash
 kubectl apply -f docs/openclaw-shared-model-secret.yaml
 kubectl apply -f docs/openclaw-template-enterprise.yaml
+# 或：
+# kubectl apply -f docs/openclaw-template-cloud-ide.yaml
 ```
 
 ## 关键点
@@ -38,3 +41,6 @@ kubectl apply -f docs/openclaw-template-enterprise.yaml
   - English: When set to `false`, first-time UI access may show `pairing required`; an admin must exec into the target Pod and approve pairing before login.
   - 中文：仅在受控内网的临时调试场景可设置为 `true`（跳过配对/approve）。
   - English: Set it to `true` only for temporary debugging in a trusted internal environment (skip pairing/approve).
+- 官方参考：
+  - 配置字段（`openclaw.json`）：https://docs.openclaw.ai/gateway/configuration-reference
+  - Control UI 配对与鉴权：https://docs.openclaw.ai/web/control-ui
