@@ -85,22 +85,46 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const owner = context.repo.owner;
-            const packageName = context.repo.repo.toLowerCase();
-            try {
-              await github.request('PATCH /orgs/{org}/packages/{package_type}/{package_name}/visibility', {
-                org: owner,
-                package_type: 'container',
-                package_name: packageName,
-                visibility: 'public',
-              });
-              core.info(`Set org package visibility to public: ${owner}/${packageName}`);
-            } catch (orgErr) {
-              core.warning(`Org package visibility update failed, fallback to user package API. ${orgErr.message}`);
-              await github.request('PATCH /user/packages/{package_type}/{package_name}/visibility', {
-                package_type: 'container',
-                package_name: packageName,
-                visibility: 'public',
-              });
-              core.info(`Set user package visibility to public: ${owner}/${packageName}`);
+            const owner = context.repo.owner.toLowerCase();
+            const repo = context.repo.repo.toLowerCase();
+            const candidates = [repo, `${owner}/${repo}`];
+            const failures = [];
+            let updated = false;
+
+            for (const packageName of candidates) {
+              try {
+                await github.request('PATCH /orgs/{org}/packages/{package_type}/{package_name}/visibility', {
+                  org: owner,
+                  package_type: 'container',
+                  package_name: packageName,
+                  visibility: 'public',
+                });
+                core.info(`Set org package visibility to public: ${owner}/${packageName}`);
+                updated = true;
+                break;
+              } catch (err) {
+                failures.push(`org:${packageName}:${err.status || 'unknown'}:${err.message}`);
+              }
+            }
+
+            if (!updated) {
+              for (const packageName of candidates) {
+                try {
+                  await github.request('PATCH /user/packages/{package_type}/{package_name}/visibility', {
+                    package_type: 'container',
+                    package_name: packageName,
+                    visibility: 'public',
+                  });
+                  core.info(`Set user package visibility to public: ${packageName}`);
+                  updated = true;
+                  break;
+                } catch (err) {
+                  failures.push(`user:${packageName}:${err.status || 'unknown'}:${err.message}`);
+                }
+              }
+            }
+
+            if (!updated) {
+              core.warning(`Unable to set GHCR visibility to public automatically. ${failures.join(' | ')}`);
+              core.warning('Image push is not blocked. If needed, set package visibility to public manually in GitHub Packages settings.');
             }
