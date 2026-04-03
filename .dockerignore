@@ -1,0 +1,19 @@
+# VCS / CI metadata
+.git
+.gitignore
+.github
+
+# Local editor / OS files
+.DS_Store
+*.swp
+*.swo
+
+# Web build dependencies and caches (very large, not needed in image build context)
+web/node_modules
+web/.umi
+web/.cache
+web/.turbo
+
+# Docs and local-only artifacts
+docs
+tmp
