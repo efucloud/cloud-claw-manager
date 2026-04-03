@@ -1,0 +1,406 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: openclaw-template-enterprise
+  namespace: openclaw
+  labels:
+    efucloud.com/openclaw.template: "true"
+  annotations:
+    efucloud.com/openclaw.template.description: "企业共享 OpenClaw 模板（生产版，含 PVC/Service/Ingress）"
+data:
+  schema: |
+    {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": true
+    }
+  defaults: |
+    {
+      "replicas": 1,
+      "servicePort": 18789,
+      "image": "ghcr.io/openclaw/openclaw:slim",
+      "gatewaySecretSuffix": "gateway-secret",
+      "modelBaseUrl": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+      "modelPrimaryId": "qwen-max",
+      "trustedProxiesJson": "[\"0.0.0.0/0\",\"::/0\"]",
+      "pvcSize": "1Gi",
+      "pvcStorageClassName": ""
+    }
+  templates: |
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: {{ .instanceName }}-{{ .gatewaySecretSuffix }}
+    type: Opaque
+    stringData:
+      OPENCLAW_GATEWAY_TOKEN: "{{ .gatewayToken }}"
+    ---
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: {{ .instanceName }}-config
+      labels:
+        app.kubernetes.io/name: openclaw
+        app.kubernetes.io/instance: {{ .instanceName }}
+    data:
+      AGENTS.md: |
+        # OpenClaw Assistant
+
+        You are a helpful enterprise AI assistant.
+    ---
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: {{ .instanceName }}-openclaw-config
+      labels:
+        app.kubernetes.io/name: openclaw
+        app.kubernetes.io/instance: {{ .instanceName }}
+    type: Opaque
+    stringData:
+      openclaw.json: |-
+        {
+          "gateway": {
+            "mode": "local",
+            "bind": "lan",
+            "port": {{ .servicePort }},
+            "trustedProxies": {{ .trustedProxiesJson }},
+            "auth": {
+              "mode": "token",
+              "token": "${OPENCLAW_GATEWAY_TOKEN}"
+            },
+            "controlUi": {
+              "enabled": true,
+              "allowInsecureAuth": false,
+              "dangerouslyDisableDeviceAuth": false,
+              "allowedOrigins": ["https://dashboard.openclaw.openclawefucloud.com", "https://*.openclawefucloud.com"]
+            }
+          },
+          "models": {
+            "providers": {
+              "qwen": {
+                "apiKey": "${OPENCLAW_MODEL_API_KEY}",
+                "baseUrl": "{{ .modelBaseUrl }}",
+                "models": [
+                  {
+                    "api": "openai-completions",
+                    "cost": {
+                      "cacheRead": 0,
+                      "cacheWrite": 0,
+                      "input": 0,
+                      "output": 0
+                    },
+                    "id": "{{ .modelPrimaryId }}",
+                    "input": [
+                      "text",
+                      "image"
+                    ],
+                    "name": "{{ .modelPrimaryId }}",
+                    "reasoning": false
+                  }
+                ]
+              }
+            }
+          },
+          "agents": {
+            "defaults": {
+              "workspace": "~/.openclaw/workspace",
+              "model": {
+                "primary": "qwen/{{ .modelPrimaryId }}"
+              }
+            },
+            "list": [
+              {
+                "id": "default",
+                "name": "OpenClaw Assistant",
+                "workspace": "~/.openclaw/workspace"
+              }
+            ]
+          },
+          "cron": {
+            "enabled": false
+          },
+          "meta": {}
+        }
+    ---
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: {{ .instanceName }}-home
+      labels:
+        app.kubernetes.io/name: openclaw
+        app.kubernetes.io/instance: {{ .instanceName }}
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: {{ .pvcSize }}
+      {{- if .pvcStorageClassName }}
+      storageClassName: {{ .pvcStorageClassName }}
+      {{- end }}
+    ---
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: {{ .instanceName }}
+      labels:
+        app.kubernetes.io/name: openclaw
+        app.kubernetes.io/instance: {{ .instanceName }}
+      {{- if .previewEndpoint }}
+      annotations:
+        efucloud.com/openclaw.endpoint: "{{ .previewEndpoint }}"
+      {{- end }}
+    spec:
+      replicas: {{ .replicas }}
+      minReadySeconds: 10
+      progressDeadlineSeconds: 600
+      strategy:
+        type: Recreate
+      revisionHistoryLimit: 10
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: openclaw
+          app.kubernetes.io/instance: {{ .instanceName }}
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: openclaw
+            app.kubernetes.io/instance: {{ .instanceName }}
+          {{- if .previewEndpoint }}
+          annotations:
+            efucloud.com/openclaw.endpoint: "{{ .previewEndpoint }}"
+          {{- end }}
+        spec:
+          automountServiceAccountToken: false
+          enableServiceLinks: false
+          terminationGracePeriodSeconds: 60
+          securityContext:
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: ScheduleAnyway
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: openclaw
+                  app.kubernetes.io/instance: {{ .instanceName }}
+          volumes:
+            - name: openclaw-home
+              persistentVolumeClaim:
+                claimName: {{ .instanceName }}-home
+            - name: config
+              configMap:
+                name: {{ .instanceName }}-config
+                defaultMode: 420
+            - name: openclaw-config
+              secret:
+                secretName: {{ .instanceName }}-openclaw-config
+                defaultMode: 420
+            - name: tmp-volume
+              emptyDir: {}
+          initContainers:
+            - name: init-config
+              image: busybox:1.37
+              command:
+                - sh
+                - "-c"
+                - |
+                  cp /openclaw-config/openclaw.json /home/node/.openclaw/openclaw.json
+                  mkdir -p /home/node/.openclaw/workspace
+                  cp /config/AGENTS.md /home/node/.openclaw/workspace/AGENTS.md
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 32Mi
+                limits:
+                  cpu: 100m
+                  memory: 64Mi
+              volumeMounts:
+                - name: openclaw-home
+                  mountPath: /home/node/.openclaw
+                - name: config
+                  mountPath: /config
+                - name: openclaw-config
+                  mountPath: /openclaw-config
+              imagePullPolicy: IfNotPresent
+              securityContext:
+                runAsUser: 1000
+                runAsGroup: 1000
+                runAsNonRoot: true
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+          containers:
+            - name: gateway
+              image: {{ .image }}
+              command:
+                - node
+                - /app/dist/index.js
+                - gateway
+                - run
+              env:
+                - name: HOME
+                  value: /home/node
+                - name: OPENCLAW_CONFIG_DIR
+                  value: /home/node/.openclaw
+                - name: NODE_ENV
+                  value: production
+                - name: OPENCLAW_GATEWAY_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ .instanceName }}-{{ .gatewaySecretSuffix }}
+                      key: OPENCLAW_GATEWAY_TOKEN
+                      optional: false
+                - name: OPENCLAW_MODEL_API_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: openclaw-shared-model-secret
+                      key: OPENCLAW_MODEL_API_KEY
+                      optional: false
+              ports:
+                - name: gateway
+                  containerPort: {{ .servicePort }}
+                  protocol: TCP
+              startupProbe:
+                exec:
+                  command:
+                    - node
+                    - "-e"
+                    - "require('http').get('http://127.0.0.1:{{ .servicePort }}/readyz', r => process.exit(r.statusCode < 400 ? 0 : 1)).on('error', () => process.exit(1))"
+                initialDelaySeconds: 10
+                timeoutSeconds: 5
+                periodSeconds: 10
+                successThreshold: 1
+                failureThreshold: 18
+              readinessProbe:
+                exec:
+                  command:
+                    - node
+                    - "-e"
+                    - "require('http').get('http://127.0.0.1:{{ .servicePort }}/readyz', r => process.exit(r.statusCode < 400 ? 0 : 1)).on('error', () => process.exit(1))"
+                initialDelaySeconds: 15
+                timeoutSeconds: 5
+                periodSeconds: 10
+                successThreshold: 1
+                failureThreshold: 3
+              livenessProbe:
+                exec:
+                  command:
+                    - node
+                    - "-e"
+                    - "require('http').get('http://127.0.0.1:{{ .servicePort }}/healthz', r => process.exit(r.statusCode < 400 ? 0 : 1)).on('error', () => process.exit(1))"
+                initialDelaySeconds: 60
+                timeoutSeconds: 10
+                periodSeconds: 30
+                successThreshold: 1
+                failureThreshold: 3
+              resources:
+                requests:
+                  cpu: 250m
+                  memory: 512Mi
+                limits:
+                  cpu: "1"
+                  memory: 2Gi
+              lifecycle:
+                preStop:
+                  exec:
+                    command:
+                      - sh
+                      - "-c"
+                      - "sleep 5"
+              volumeMounts:
+                - name: openclaw-home
+                  mountPath: /home/node/.openclaw
+                - name: tmp-volume
+                  mountPath: /tmp
+              securityContext:
+                runAsUser: 1000
+                runAsGroup: 1000
+                runAsNonRoot: true
+                readOnlyRootFilesystem: true
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+              imagePullPolicy: IfNotPresent
+    ---
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: {{ .instanceName }}
+      labels:
+        app.kubernetes.io/name: openclaw
+        app.kubernetes.io/instance: {{ .instanceName }}
+    spec:
+      type: ClusterIP
+      sessionAffinity: None
+      selector:
+        app.kubernetes.io/name: openclaw
+        app.kubernetes.io/instance: {{ .instanceName }}
+      ports:
+        - name: gateway
+          port: {{ .servicePort }}
+          targetPort: {{ .servicePort }}
+          protocol: TCP
+    ---
+    apiVersion: policy/v1
+    kind: PodDisruptionBudget
+    metadata:
+      name: {{ .instanceName }}
+      labels:
+        app.kubernetes.io/name: openclaw
+        app.kubernetes.io/instance: {{ .instanceName }}
+    spec:
+      maxUnavailable: 1
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: openclaw
+          app.kubernetes.io/instance: {{ .instanceName }}
+    {{- if and .ingressEnabled .previewHost }}
+    ---
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+      name: {{ .instanceName }}
+      labels:
+        app.kubernetes.io/name: openclaw
+        app.kubernetes.io/instance: {{ .instanceName }}
+      annotations:
+        nginx.ingress.kubernetes.io/proxy-connect-timeout: "30"
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+        nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+        nginx.ingress.kubernetes.io/proxy-body-size: "16m"
+        {{- if .ingressTlsEnabled }}
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        {{- end }}
+        # Allow dashboard iframe preview by replacing restrictive upstream headers.
+        nginx.ingress.kubernetes.io/configuration-snippet: |
+          proxy_hide_header X-Frame-Options;
+          proxy_hide_header Content-Security-Policy;
+          add_header Content-Security-Policy "frame-ancestors 'self' http://localhost:8000 http://127.0.0.1:8000 http://localhost:8080 http://127.0.0.1:8080 https://localhost:8443 https://127.0.0.1:8443 http://{{ .previewHost }}:8080 https://{{ .previewHost }} http://*.openclawefucloud.com https://*.openclawefucloud.com" always;
+    spec:
+      ingressClassName: {{ .ingressClassName }}
+      rules:
+        - host: {{ .previewHost }}
+          http:
+            paths:
+              - path: {{ .ingressPath }}
+                pathType: {{ .ingressPathType }}
+                backend:
+                  service:
+                    name: {{ .instanceName }}
+                    port:
+                      number: {{ .servicePort }}
+      {{- if and .ingressTlsEnabled .ingressTlsSecretName }}
+      tls:
+        - hosts:
+            - {{ .previewHost }}
+          secretName: {{ .ingressTlsSecretName }}
+      {{- end }}
+    {{- end }}

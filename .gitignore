@@ -1,0 +1,53 @@
+# ------------------------------
+# OS / Editor
+# ------------------------------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.history/
+
+# ------------------------------
+# Logs / Temp
+# ------------------------------
+*.log
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*bak
+
+# ------------------------------
+# Backend / Go
+# ------------------------------
+_output/
+vendor/
+*.db
+**/public.pem
+kubeconfig
+oidc-cfg
+flow/
+log/
+autotest/
+build/
+dist/
+/generate/
+/generates/
+/docs/certs/
+/build.sh
+/Dockerfile.local
+
+# ------------------------------
+# Frontend (web/)
+# ------------------------------
+/web/node_modules/
+/web/dist/
+/web/coverage/
+/web/.temp/
+/web/.umi/
+/web/.umi-production/
+/web/.umi-test/
+/web/.firebase/
+/web/screenshot/
+/web/_roadhog-api-doc/
+/web/src/utils/request-temp.js
+/web/package-lock.json

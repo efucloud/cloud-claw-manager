@@ -1,0 +1,572 @@
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family:
+    AlibabaSans, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+.colorWeak {
+  filter: invert(80%);
+}
+
+.ant-layout {
+  min-height: 100vh;
+}
+
+.ant-pro-sider.ant-layout-sider.ant-pro-sider-fixed {
+  left: unset;
+}
+
+canvas {
+  display: block;
+}
+
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+@media (max-width: 768px) {
+  .ant-table {
+    width: 100%;
+    overflow-x: auto;
+
+    &-thead>tr,
+    &-tbody>tr {
+
+      >th,
+      >td {
+        white-space: pre;
+
+        >span {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+.danger {
+  color: red;
+}
+
+.operation-delete {
+  color: red;
+}
+
+.operation-disable {
+  color: rgb(252, 109, 38);
+}
+
+.operation-enable {
+  color: rgb(51, 204, 0);
+}
+
+.tabel-cell-custom {
+  .ant-form-item {
+    margin-block: 0;
+  }
+
+  background-color: red;
+}
+
+/* xyflow theme files. Delete these to start from our base */
+
+.react-flow {
+  /* Custom Variables */
+  --xy-theme-selected: #F57DBD;
+  --xy-theme-hover: #C5C5C5;
+  --xy-theme-edge-hover: #F57DBD;
+  --xy-theme-color-focus: #E8E8E8;
+
+  /* Built-in Variables see https://reactflow.dev/learn/customization/theming */
+  --xy-node-border-default: 1px solid #e0e0e0;
+  --xy-node-bg-default: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  --xy-node-boxshadow-default:
+    0 2px 4px rgba(0, 0, 0, 0.08),
+    0 6px 12px rgba(0, 0, 0, 0.12),
+    0 12px 24px rgba(0, 0, 0, 0.08);
+  --xy-node-border-radius: 12px;
+  --xy-node-font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --xy-node-border-radius-default: 8px;
+
+  --xy-handle-background-color-default: #ffffff;
+  --xy-handle-border-color-default: #AAAAAA;
+
+  --xy-edge-label-color-default: #505050;
+}
+
+.react-flow.dark {
+  --xy-node-boxshadow-default:
+    0px 3.54px 4.55px 0px rgba(255, 255, 255, 0.05),
+    /* light shadow */
+    0px 3.54px 4.55px 0px rgba(255, 255, 255, 0.13),
+    /* medium shadow */
+    0px 0.51px 1.01px 0px rgba(255, 255, 255, 0.2);
+  /* smallest shadow */
+  --xy-theme-color-focus: #535353;
+}
+
+/* Customizing Default Theming */
+
+.react-flow__node {
+  box-shadow: var(--xy-node-boxshadow-default);
+  border-radius: var(--xy-node-border-radius-default);
+  background-color: var(--xy-node-background-color-default);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 5px;
+  font-size: 8px;
+  flex-direction: column;
+  // border: var(--xy-node-border-default);
+  color: var(--xy-node-color, var(--xy-node-color-default));
+}
+
+.react-flow__node.selectable:focus {
+  box-shadow: 0px 0px 0px 4px var(--xy-theme-color-focus);
+  border-color: #d9d9d9;
+}
+
+.react-flow__node.selectable:focus:active {
+  box-shadow: var(--xy-node-boxshadow-default);
+}
+
+
+.react-flow__node.selectable:hover,
+.react-flow__node.draggable:hover {
+  border-color: var(--xy-theme-hover);
+}
+
+.react-flow__node.selectable.selected {
+  border-color: var(--xy-theme-selected);
+  box-shadow: var(--xy-node-boxshadow-default);
+}
+
+.react-flow__node-group {
+  background-color: rgba(207, 182, 255, 0.4);
+  border-color: #9E86ED;
+}
+
+.react-flow__edge.selectable:hover .react-flow__edge-path,
+.react-flow__edge.selectable.selected .react-flow__edge-path {
+  stroke: var(--xy-theme-edge-hover);
+}
+
+.react-flow__handle {
+  background-color: var(--xy-handle-background-color-default);
+}
+
+.react-flow__handle.connectionindicator:hover {
+  pointer-events: all;
+  border-color: var(--xy-theme-edge-hover);
+  background-color: white;
+}
+
+.react-flow__handle.connectionindicator:focus,
+.react-flow__handle.connectingfrom,
+.react-flow__handle.connectingto {
+  border-color: var(--xy-theme-edge-hover);
+}
+
+.react-flow__node-resizer {
+  border-radius: 0;
+  border: none;
+}
+
+.react-flow__resize-control.handle {
+  background-color: #ffffff;
+  border-color: #9E86ED;
+  border-radius: 0;
+  width: 5px;
+  height: 5px;
+}
+
+.ant-pro-steps-form-container {
+  width: 100%;
+}
+
+/* 确保你给FloatButton或者它的父元素一个特定的类名或ID以便于样式控制 */
+.ant-float-btn-group {
+  position: fixed;
+  top: 15%;
+  transform: translateY(-50%);
+  right: 20px;
+  /* 根据需要调整距离右边的距离 */
+}
+
+.mcp-server-cart-float-button-active {
+  position: fixed;
+  top: 15%;
+  transform: translateY(-50%);
+  right: 60px;
+  /* 根据需要调整距离右边的距离 */
+  animation: pulse 1.5s ease-in-out infinite;
+
+  @keyframes pulse {
+    0% {
+      /* 起始状态：较小 */
+      transform: scale(0.8);
+      /* 缩放为原始大小的 80% */
+      opacity: 0.7;
+    }
+
+    50% {
+      /* 中间状态：最大 */
+      transform: scale(1.1);
+      /* 放大为原始大小的 180% */
+      opacity: 1.0;
+      /* 可以添加旋转等效果 */
+      /* transform: scale(1.8) rotate(10deg); */
+    }
+
+    100% {
+      /* 结束状态：回到起始状态，准备下一个循环 */
+      transform: scale(0.8);
+      opacity: 0.7;
+    }
+  }
+}
+
+.no-search-form .ant-pro-table-search {
+  display: none !important;
+  /* 彻底隐藏搜索区域 */
+}
+
+/* 或者只去除空白： */
+.no-search-form .ant-pro-table-search {
+  padding-block: 0 !important;
+  border-bottom: none;
+}
+
+ 
+.markdown-wrapper img {
+  max-width: 100% !important;
+  height: auto !important;
+  display: block;
+  margin: 0.5em auto;
+}
+
+.markdown-wrapper {
+  max-width: 100% !important;
+  height: auto !important;
+  display: block;
+  margin: 0.5em auto;
+}
+
+.compact-markdown {
+  white-space: normal;
+}
+
+.ant-bubble-list .ant-bubble-start {
+  margin-inline-end: min(15%, 40px) !important;
+}
+
+.ant-bubble-list .ant-bubble-end {
+  margin-inline-start: min(15%, 40px) !important;
+}
+
+.yaml-template-variable-highlight {
+  background-color: #e4eae5 !important;
+  color: #d32f2f !important;
+  font-weight: bold;
+
+}
+
+.ant-pro-checkcard-content {
+  padding-block: 5px !important;
+}
+
+.ant-pro-checkcard-body {
+  padding: 5px !important;
+}
+
+/* 只影响当前页面 */
+.no-padding-page .ant-pro-page-container-children-container,
+.no-padding-page .ant-pro-page-container-children-container-no-header {
+  padding: 0 !important;
+}
+
+// 移除画布中的react flow标识
+// .react-flow__attribution {
+//   display: none !important;
+// }
+
+.react-flow-custom-control {
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  border-right: 1px solid var(--xy-controls-button-border-color-props,
+      var(--xy-controls-button-border-color, var(--xy-controls-button-border-color-default)));
+  background-color: rgb(254, 254, 254);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.react-flow-custom-control:hover {
+  background-color: rgb(244, 244, 244);
+  /* Ant Design 的 info 背景色示例 */
+}
+
+//react flow 自定义按钮
+.xy-theme__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  padding: 0 1rem;
+  border-radius: 100px;
+  border: 1px solid var(--color-primary);
+  background-color: var(--color-background);
+  color: var(--color-primary);
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+  box-shadow: var(--xy-node-boxshadow-default);
+  cursor: pointer;
+}
+
+.xy-theme__button.active {
+  background-color: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+.xy-theme__button.active:hover,
+.xy-theme__button.active:active {
+  background-color: var(--color-primary);
+  opacity: 0.9;
+}
+
+.xy-theme__button:hover {
+  background-color: var(--xy-controls-button-background-color-hover-default);
+}
+
+.xy-theme__button:active {
+  background-color: var(--color-hover-bg);
+}
+
+.xy-theme__button:disabled {
+  color: var(--color-disabled);
+  opacity: 0.8;
+  cursor: not-allowed;
+  border: 1px solid var(--color-disabled);
+}
+
+.xy-theme__button>span {
+  margin-right: 0.2rem;
+}
+
+/* Add gap between adjacent buttons */
+.xy-theme__button+.xy-theme__button {
+  margin-left: 0.3rem;
+}
+
+.react-flow__node-start,
+.react-flow__node-stop,
+.react-flow__node-finally {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  font-family: monospace;
+  text-align: center;
+}
+
+/* 默认隐藏或极小化 Handle */
+.react-flow-small-handle {
+  background-color: #03f43b !important;
+  border: none !important;
+  opacity: 0;
+  /* 默认透明 */
+  transition: opacity 0.2s ease;
+  pointer-events: all;
+  /* 确保即使透明也能交互 */
+}
+
+.react-flow__handle.selected .react-flow-small-handle {
+  width: 15px !important;
+  height: 15px !important;
+}
+
+.react-flow-small-handle:hover {
+  width: 15px !important;
+  height: 15px !important;
+}
+
+/* 当鼠标悬停在节点上时，显示 Handle */
+.task-node:hover .react-flow-small-handle {
+  opacity: 1;
+}
+
+.react-flow__minimap {
+  background-color: #ffffff;
+}
+
+.task-run-success {
+  background-color: #03f43b;
+}
+
+.react-flow__node {
+  padding: 0 !important;
+}
+
+/* 定义闪烁动画 */
+@keyframes blink {
+  0% {
+    background-color: rgb(155, 216, 125);
+    box-shadow: 0 0 0 2px rgb(155, 216, 125);
+    /* 绿色阴影 */
+  }
+
+  50% {
+    background-color: transparent;
+    box-shadow: 0 0 0 2px rgb(155, 216, 125);
+    /* 半透明绿色阴影 */
+  }
+
+  100% {
+    background-color: rgb(155, 216, 125);
+    box-shadow: 0 0 0 2px rgb(155, 216, 125);
+    /* 绿色阴影 */
+  }
+}
+
+/* 应用到节点 */
+.node-run-running {
+  border-radius: 8px;
+  animation: blink 1s step-end infinite;
+}
+
+.node-run-success {
+  border-radius: 8px;
+  background-color: rgb(155, 216, 125) !important;
+  box-shadow: 0 0 0 2px rgb(155, 216, 125);
+}
+
+.node-run-failed {
+  border-radius: 8px;
+  background-color: rgba(255, 0, 0, 0.2) !important;
+  box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.2);
+}
+
+.node-run-pending {
+  border-radius: 8px;
+  background-color: rgba(24, 109, 245, 0.2) !important;
+  box-shadow: 0 0 0 2px rgba(24, 109, 245, 0.2);
+}
+
+/* styles.css */
+.text-ellipsis-2 {
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5;
+  max-height: 4.5em;
+  /* 3 * 1.5em */
+  font-size: 12px;
+}
+
+/* global.css or global.less */
+.small-font-descriptions .ant-descriptions-item-label,
+.small-font-descriptions .ant-descriptions-item-content {
+  font-size: 6px !important;
+  line-height: 1.4;
+}
+
+.small-font-descriptions .descriptions-item {
+  font-size: 6px !important;
+}
+
+.reactflow-text-ellipsis-2 {
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5;
+  max-height: 4.5em;
+  /* 3 * 1.5em */
+  font-size: 6px;
+}
+
+.component-node:hover .react-flow-small-handle {
+  opacity: 1;
+}
+
+.ant-input-disabled {
+  color: rgba(0, 0, 0, 0.88) !important;
+}
+
+.ant-select-disabled {
+  color: rgba(0, 0, 0, 0.88) !important;
+}
+.ant-button-disabled {
+  color: rgba(0, 0, 0, 0.88) !important;
+}
+.ant-drawer-body-no-padding .ant-drawer-body {
+  padding: 0 !important;
+}
+
+.layout-left-right {
+  display: 'flex';
+  justify-content: 'space-between';
+  align-items: 'center';
+  width: '100%'
+}
+
+.no-margin-bottom .ant-descriptions-header {
+  margin-bottom: 0 !important;
+}
+
+.no-margin-bottom {
+  margin-bottom: 0 !important;
+  padding: 0 !important;
+}
+
+.ai-float-btn {
+  top: 124px !important;
+  bottom: auto !important;
+  right: 20px !important;
+}
+
+
+.ant-bubble-body {
+  width: 96%;
+  max-width: none;
+  border-radius: calc(var(--ant-border-radius) * 2);
+  background-color: @component-background; // 使用Ant Design内置的颜色变量作为背景色
+  margin-top: 6px;
+  margin-bottom: 6px;
+ 
+}
+.ant-bubble-content{
+ border: none !important;
+}
+
+.chat-sender{
+   background-color: var(--ant-color-bg-base);
+}
+.ai-drawer .ant-drawer-body {
+  background: var(--ant-color-fill-content);
+  padding: 0 !important;
+
+}
+
+.ant-prompts-item {
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+}

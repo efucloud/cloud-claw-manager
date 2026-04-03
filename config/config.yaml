@@ -1,0 +1,17 @@
+logConfig:
+  level: debug
+oidcConfig:
+  clientId: umtsnwb4nvehzfmwaimi5knql
+  clientSecret: boowj4iujtvqinyw5grtmqzvpblcc6v7jhpxke5zhiktxn6zw3u
+  issuer: https://eauth.efucloud.com
+openClawControl:
+  previewBaseDomain: openclawefucloud.com
+  adminEmails:
+    - admin@efucloud.com
+    - admin@efucloud.cn
+  ingressEnabled: true
+  ingressClassName: nginx
+  ingressPath: /
+  ingressPathType: Prefix
+  ingressTlsEnabled: true
+  ingressTlsSecretName: openclawefucloud-com-tls

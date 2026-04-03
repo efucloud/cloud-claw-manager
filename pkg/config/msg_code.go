@@ -1,0 +1,27 @@
+package config
+
+const (
+	MsgCodeUserInfoIsEmpty               = "userInfoIsEmpty"
+	MsgCodeApplicationUnExceptPanicError = "applicationUnExceptPanicError"
+	MsgCodeOrgNotFound                   = "orgNotFound"
+	MsgCodeJsonDecodeFailed              = "jsonDecodeFailed"
+	MsgCodeJsonEncodeFailed              = "jsonEncodeFailed"
+	MsgCodeGetRecordFailed               = "getRecordFailed"
+	MsgCodeCreateRecordFailed            = "createRecordFailed"
+	MsgCodeUpdateRecordFailed            = "updateRecordFailed"
+	MsgCodeDeleteRecordFailed            = "deleteRecordFailed"
+	MsgCodePathIdInvalid                 = "pathIdInvalid"
+	MsgCodeRecordNotExist                = "recordNotExist"
+	MsgCodeAuthorizationInvalid          = "authorizationInvalid"
+	MsgCodeRequestDataInvalid            = "requestDataInvalid"
+	MsgCodeTokenInvalid                  = "tokenInvalid"
+	MsgCodeAuthFailed                    = "authFailed"
+	MsgCodeCurrentOrgIsForbidden         = "currentOrgIsForbidden"
+	MsgCodeCurrentActionIsForbidden      = "currentActionIsForbidden"
+	MsgCodeCurrentActionIsInvalid        = "currentActionIsInvalid"
+	MsgCodeGetClusterFailed              = "getClusterFailed"
+	MsgCodeCreateClusterClientSetFailed  = "createClusterClientSetFailed"
+	MsgCodeActionOnlyForOrgOwner         = "actionOnlyForOrgOwner"
+	MsgCodeAccountIsForbiddenLogin       = "accountIsForbiddenLogin"
+	MsgCodeClusterIsNotFoundOrDisable    = "clusterIsNotFoundOrDisable"
+)
