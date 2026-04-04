@@ -43,6 +43,9 @@ func TestInjectOpenClawOwnershipLabels_WithTemplateRef(t *testing.T) {
 	if got := labels[openClawResourceLabelInstance]; got != "openclaw-abc123" {
 		t.Fatalf("expected instance label openclaw-abc123, got %v", got)
 	}
+	if got := labels[OpenClawInstanceLabelType]; got != openClawInstanceTypeValue {
+		t.Fatalf("expected type label %s, got %v", openClawInstanceTypeValue, got)
+	}
 	if got := labels[OpenClawInstanceLabelTemplateRef]; got != "tpl-demo" {
 		t.Fatalf("expected template-ref label tpl-demo, got %v", got)
 	}
@@ -74,6 +77,9 @@ func TestInjectOpenClawOwnershipLabels_WithoutTemplateRef(t *testing.T) {
 	labels, ok := metadata["labels"].(map[string]interface{})
 	if !ok {
 		t.Fatalf("labels missing or invalid type")
+	}
+	if got := labels[OpenClawInstanceLabelType]; got != openClawInstanceTypeValue {
+		t.Fatalf("expected type label %s, got %v", openClawInstanceTypeValue, got)
 	}
 	if _, exists := labels[OpenClawInstanceLabelTemplateRef]; exists {
 		t.Fatalf("template-ref label should not exist when templateRef is empty")

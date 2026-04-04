@@ -20,15 +20,15 @@ import (
 )
 
 const (
-	OpenClawTemplateLabelKey        = "efucloud.com/openclaw.template"
+	OpenClawTemplateLabelKey        = "efucloud.com/claw.template"
 	OpenClawTemplateLabelValue      = "true"
 	openClawTemplateDataSchemaKey   = "schema"
 	openClawTemplateDataDefaultsKey = "defaults"
 	openClawTemplateDataBodyKey     = "templates"
-	openClawTemplateDescAnnotation  = "efucloud.com/openclaw.template.description"
+	openClawTemplateDescAnnotation  = "efucloud.com/claw.template.description"
 
-	openClawResourceLabelOwner    = "efucloud.com/openclaw.owner"
-	openClawResourceLabelInstance = "efucloud.com/openclaw.instance"
+	openClawResourceLabelOwner    = "efucloud.com/claw.owner"
+	openClawResourceLabelInstance = "efucloud.com/claw.instance"
 )
 
 var (
@@ -43,18 +43,30 @@ func (s OpenClawTemplateService) ListTemplates(ctx context.Context) (OpenClawTem
 	if err != nil {
 		return OpenClawTemplateListResponse{}, err
 	}
-	list, err := client.List(ctx, metav1.ListOptions{LabelSelector: OpenClawTemplateLabelKey + "=" + OpenClawTemplateLabelValue})
-	if err != nil {
-		return OpenClawTemplateListResponse{}, err
+	items := make([]corev1.ConfigMap, 0)
+	seen := map[string]struct{}{}
+	for _, selector := range buildLegacyAwareLabelSelectors(OpenClawTemplateLabelKey, OpenClawTemplateLabelValue) {
+		list, err := client.List(ctx, metav1.ListOptions{LabelSelector: selector})
+		if err != nil {
+			return OpenClawTemplateListResponse{}, err
+		}
+		for i := range list.Items {
+			key := list.Items[i].Namespace + "/" + list.Items[i].Name
+			if _, exists := seen[key]; exists {
+				continue
+			}
+			seen[key] = struct{}{}
+			items = append(items, list.Items[i])
+		}
 	}
-	sort.Slice(list.Items, func(i, j int) bool {
-		return list.Items[i].Name < list.Items[j].Name
+	sort.Slice(items, func(i, j int) bool {
+		return items[i].Name < items[j].Name
 	})
-	out := make([]OpenClawTemplate, 0, len(list.Items))
-	for i := range list.Items {
-		item, parseErr := parseTemplateConfigMap(list.Items[i])
+	out := make([]OpenClawTemplate, 0, len(items))
+	for i := range items {
+		item, parseErr := parseTemplateConfigMap(items[i])
 		if parseErr != nil {
-			config.Logger.Warnf("skip invalid openclaw template configmap %s/%s: %v", list.Items[i].Namespace, list.Items[i].Name, parseErr)
+			config.Logger.Warnf("skip invalid openclaw template configmap %s/%s: %v", items[i].Namespace, items[i].Name, parseErr)
 			continue
 		}
 		item.Templates = ""
@@ -211,6 +223,7 @@ func InjectOpenClawOwnershipLabels(resources []runtime.RawExtension, owner, inst
 		}
 		meta := ensureObjectMap(obj, "metadata")
 		labels := ensureStringMap(meta, "labels")
+		labels[OpenClawInstanceLabelType] = openClawInstanceTypeValue
 		if owner != "" {
 			labels[openClawResourceLabelOwner] = owner
 		}
@@ -253,7 +266,7 @@ func parseTemplateConfigMap(cm corev1.ConfigMap) (OpenClawTemplate, error) {
 	return OpenClawTemplate{
 		Name:        cm.Name,
 		Namespace:   cm.Namespace,
-		Description: strings.TrimSpace(cm.Annotations[openClawTemplateDescAnnotation]),
+		Description: readMapValueWithLegacy(cm.Annotations, openClawTemplateDescAnnotation),
 		Schema:      schema,
 		Defaults:    defaults,
 		Templates:   templates,
@@ -299,9 +312,12 @@ func templateToConfigMap(namespace string, req OpenClawTemplateUpsertRequest) (*
 	}
 	return &corev1.ConfigMap{
 		ObjectMeta: metav1.ObjectMeta{
-			Namespace:   namespace,
-			Name:        req.Name,
-			Labels:      map[string]string{OpenClawTemplateLabelKey: OpenClawTemplateLabelValue},
+			Namespace: namespace,
+			Name:      req.Name,
+			Labels: map[string]string{
+				OpenClawTemplateLabelKey:  OpenClawTemplateLabelValue,
+				OpenClawInstanceLabelType: openClawInstanceTypeValue,
+			},
 			Annotations: annotations,
 		},
 		Data: map[string]string{

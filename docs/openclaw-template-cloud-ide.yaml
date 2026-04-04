@@ -4,9 +4,10 @@ metadata:
   name: openclaw-template-cloud-ide
   namespace: openclaw
   labels:
-    efucloud.com/openclaw.template: "true"
+    efucloud.com/claw.template: "true"
+    efucloud.com/claw.type: "openclaw"
   annotations:
-    efucloud.com/openclaw.template.description: "云端 IDE 开发模板（DevOps/React/Go 多 Agent 协作，含 PVC/Service/Ingress）"
+    efucloud.com/claw.template.description: "云端 IDE 开发模板（DevOps/React/Go 多 Agent 协作，含 PVC/Service/Ingress）"
 data:
   schema: |
     {
@@ -237,7 +238,7 @@ data:
         app.kubernetes.io/instance: {{ .instanceName }}
       {{- if .previewEndpoint }}
       annotations:
-        efucloud.com/openclaw.endpoint: "{{ .previewEndpoint }}"
+        efucloud.com/claw.endpoint: "{{ .previewEndpoint }}"
       {{- end }}
     spec:
       replicas: {{ .replicas }}
@@ -257,7 +258,7 @@ data:
             app.kubernetes.io/instance: {{ .instanceName }}
           {{- if .previewEndpoint }}
           annotations:
-            efucloud.com/openclaw.endpoint: "{{ .previewEndpoint }}"
+            efucloud.com/claw.endpoint: "{{ .previewEndpoint }}"
           {{- end }}
         spec:
           automountServiceAccountToken: false

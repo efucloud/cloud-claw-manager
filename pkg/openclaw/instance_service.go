@@ -31,28 +31,30 @@ import (
 )
 
 const (
-	OpenClawInstanceLabelOwnerID     = "efucloud.com/openclaw.owner.id"
-	OpenClawInstanceLabelOwner       = "efucloud.com/openclaw.owner"
-	OpenClawInstanceLabelInstance    = "efucloud.com/openclaw.instance"
-	OpenClawInstanceLabelTemplateRef = "efucloud.com/openclaw.template-ref"
-	OpenClawInstanceLabelManagedBy   = "efucloud.com/openclaw.managed-by"
+	OpenClawInstanceLabelType        = "efucloud.com/claw.type"
+	OpenClawInstanceLabelOwnerID     = "efucloud.com/claw.owner.id"
+	OpenClawInstanceLabelOwner       = "efucloud.com/claw.owner"
+	OpenClawInstanceLabelInstance    = "efucloud.com/claw.instance"
+	OpenClawInstanceLabelTemplateRef = "efucloud.com/claw.template-ref"
+	OpenClawInstanceLabelManagedBy   = "efucloud.com/claw.managed-by"
+	openClawInstanceTypeValue        = "openclaw"
 	openClawDefaultManagedByValue    = "cloud-claw-manager"
-	openClawRestartedAtAnnotation    = "efucloud.com/openclaw.restartedAt"
-	openClawInstanceStateAnnotation  = "efucloud.com/openclaw.instance.state"
+	openClawRestartedAtAnnotation    = "efucloud.com/claw.restartedAt"
+	openClawInstanceStateAnnotation  = "efucloud.com/claw.instance.state"
 	openClawGeneratedNameLength      = 6
 	openClawGeneratedNamePrefix      = "openclaw-"
 	openClawGatewayTokenLength       = 20
-	openClawGatewayTokenSecretName   = "efucloud.com/openclaw.gateway-token.secret-name"
-	openClawGatewayTokenSecretKey    = "efucloud.com/openclaw.gateway-token.secret-key"
+	openClawGatewayTokenSecretName   = "efucloud.com/claw.gateway-token.secret-name"
+	openClawGatewayTokenSecretKey    = "efucloud.com/claw.gateway-token.secret-key"
 	openClawGatewayTokenDataKey      = "OPENCLAW_GATEWAY_TOKEN"
-	openClawEndpointAnnotation       = "efucloud.com/openclaw.endpoint"
-	openClawDisplayNameAnnotation    = "efucloud.com/openclaw.display-name"
-	openClawPurposeAnnotation        = "efucloud.com/openclaw.purpose"
-	openClawOwnerAnnotation          = "efucloud.com/openclaw.owner"
-	openClawOwnerIDAnnotation        = "efucloud.com/openclaw.owner.id"
-	openClawOwnerUsernameAnnotation  = "efucloud.com/openclaw.owner.username"
-	openClawOwnerEmailAnnotation     = "efucloud.com/openclaw.owner.email"
-	openClawInstanceAnnotation       = "efucloud.com/openclaw.instance"
+	openClawEndpointAnnotation       = "efucloud.com/claw.endpoint"
+	openClawDisplayNameAnnotation    = "efucloud.com/claw.display-name"
+	openClawPurposeAnnotation        = "efucloud.com/claw.purpose"
+	openClawOwnerAnnotation          = "efucloud.com/claw.owner"
+	openClawOwnerIDAnnotation        = "efucloud.com/claw.owner.id"
+	openClawOwnerUsernameAnnotation  = "efucloud.com/claw.owner.username"
+	openClawOwnerEmailAnnotation     = "efucloud.com/claw.owner.email"
+	openClawInstanceAnnotation       = "efucloud.com/claw.instance"
 	openClawIngressHideHeadersAnno   = "nginx.ingress.kubernetes.io/proxy-hide-headers"
 )
 
@@ -61,6 +63,64 @@ var (
 	ErrOpenClawNotFound     = errors.New("not found")
 	ErrOpenClawInvalidInput = errors.New("invalid input")
 )
+
+func legacyClawMetadataKey(key string) string {
+	key = strings.TrimSpace(key)
+	if key == "" {
+		return ""
+	}
+	return strings.Replace(key, "/claw.", "/openclaw.", 1)
+}
+
+func readMapValueWithLegacy(values map[string]string, key string) string {
+	if len(values) == 0 {
+		return ""
+	}
+	key = strings.TrimSpace(key)
+	if key == "" {
+		return ""
+	}
+	if value := strings.TrimSpace(values[key]); value != "" {
+		return value
+	}
+	legacyKey := legacyClawMetadataKey(key)
+	if legacyKey != key {
+		if value := strings.TrimSpace(values[legacyKey]); value != "" {
+			return value
+		}
+	}
+	return ""
+}
+
+func buildLegacyAwareLabelSelectors(key, value string) []string {
+	key = strings.TrimSpace(key)
+	value = strings.TrimSpace(value)
+	if key == "" {
+		return nil
+	}
+	candidates := []string{
+		key,
+		legacyClawMetadataKey(key),
+	}
+	seen := map[string]struct{}{}
+	out := make([]string, 0, len(candidates))
+	for _, candidateKey := range candidates {
+		candidateKey = strings.TrimSpace(candidateKey)
+		if candidateKey == "" {
+			continue
+		}
+		selector := candidateKey
+		if value != "" {
+			selector = fmt.Sprintf("%s=%s", candidateKey, value)
+		}
+		if _, exists := seen[selector]; exists {
+			continue
+		}
+		seen[selector] = struct{}{}
+		out = append(out, selector)
+	}
+	return out
+}
 
 type OpenClawSecretRef struct {
 	Name string `json:"name"`
@@ -531,6 +591,7 @@ func (s OpenClawInstanceService) CreateInstance(ctx context.Context, requesterID
 		resourceAnnotations[openClawGatewayTokenSecretKey] = gatewayTokenRef.Key
 	}
 	resourceLabels := map[string]string{
+		OpenClawInstanceLabelType:      openClawInstanceTypeValue,
 		OpenClawInstanceLabelOwnerID:   requesterID,
 		OpenClawInstanceLabelOwner:     requesterID,
 		OpenClawInstanceLabelInstance:  name,
@@ -649,17 +710,22 @@ func (c *openClawClients) get(ctx context.Context) (*kubernetes.Clientset, dynam
 }
 
 func listInstanceDeployments(ctx context.Context, kc *kubernetes.Clientset, namespace, instanceName string) ([]appsv1.Deployment, error) {
-	selector := OpenClawInstanceLabelInstance
-	if strings.TrimSpace(instanceName) != "" {
-		selector = fmt.Sprintf("%s=%s", OpenClawInstanceLabelInstance, strings.TrimSpace(instanceName))
-	}
-	list, err := kc.AppsV1().Deployments(strings.TrimSpace(namespace)).List(ctx, metav1.ListOptions{LabelSelector: selector})
-	if err != nil {
-		return nil, err
-	}
-	out := make([]appsv1.Deployment, 0, len(list.Items))
-	for i := range list.Items {
-		out = append(out, list.Items[i])
+	selectors := buildLegacyAwareLabelSelectors(OpenClawInstanceLabelInstance, instanceName)
+	out := make([]appsv1.Deployment, 0)
+	seen := map[string]struct{}{}
+	for _, selector := range selectors {
+		list, err := kc.AppsV1().Deployments(strings.TrimSpace(namespace)).List(ctx, metav1.ListOptions{LabelSelector: selector})
+		if err != nil {
+			return nil, err
+		}
+		for i := range list.Items {
+			key := list.Items[i].Namespace + "/" + list.Items[i].Name
+			if _, exists := seen[key]; exists {
+				continue
+			}
+			seen[key] = struct{}{}
+			out = append(out, list.Items[i])
+		}
 	}
 	return out, nil
 }
@@ -668,7 +734,7 @@ func aggregateInstances(deployments []appsv1.Deployment, requesterID string) []O
 	groups := map[string][]appsv1.Deployment{}
 	for i := range deployments {
 		dep := deployments[i]
-		instanceName := strings.TrimSpace(dep.Labels[OpenClawInstanceLabelInstance])
+		instanceName := readMapValueWithLegacy(dep.Labels, OpenClawInstanceLabelInstance)
 		if instanceName == "" {
 			instanceName = dep.Name
 		}
@@ -694,22 +760,22 @@ func buildInstanceFromDeployments(group []appsv1.Deployment, requesterID string)
 		return group[i].CreationTimestamp.Time.Before(group[j].CreationTimestamp.Time)
 	})
 	base := group[0]
-	instanceName := strings.TrimSpace(base.Labels[OpenClawInstanceLabelInstance])
+	instanceName := readMapValueWithLegacy(base.Labels, OpenClawInstanceLabelInstance)
 	if instanceName == "" {
-		instanceName = strings.TrimSpace(base.Annotations[openClawInstanceAnnotation])
+		instanceName = readMapValueWithLegacy(base.Annotations, openClawInstanceAnnotation)
 	}
 	if instanceName == "" {
 		instanceName = base.Name
 	}
-	owner := strings.TrimSpace(base.Labels[OpenClawInstanceLabelOwner])
+	owner := readMapValueWithLegacy(base.Labels, OpenClawInstanceLabelOwner)
 	if owner == "" {
-		owner = strings.TrimSpace(base.Labels[OpenClawInstanceLabelOwnerID])
+		owner = readMapValueWithLegacy(base.Labels, OpenClawInstanceLabelOwnerID)
 	}
 	if owner == "" {
-		owner = strings.TrimSpace(base.Annotations[openClawOwnerAnnotation])
+		owner = readMapValueWithLegacy(base.Annotations, openClawOwnerAnnotation)
 	}
 	if owner == "" {
-		owner = strings.TrimSpace(base.Annotations[openClawOwnerIDAnnotation])
+		owner = readMapValueWithLegacy(base.Annotations, openClawOwnerIDAnnotation)
 	}
 	ownerUsername := detectInstanceAnnotation(group, openClawOwnerUsernameAnnotation)
 	ownerEmail := detectInstanceAnnotation(group, openClawOwnerEmailAnnotation)
@@ -795,16 +861,17 @@ func deploymentUpdatedAt(dep appsv1.Deployment) time.Time {
 func detectInstanceEndpoint(group []appsv1.Deployment) string {
 	keys := []string{
 		openClawEndpointAnnotation,
+		legacyClawMetadataKey(openClawEndpointAnnotation),
 		"openclaw.efucloud.com/endpoint",
 		"openclaw.endpoint",
 		"endpoint",
 	}
 	for i := range group {
 		for _, key := range keys {
-			if value := strings.TrimSpace(group[i].Annotations[key]); value != "" {
+			if value := readMapValueWithLegacy(group[i].Annotations, key); value != "" {
 				return value
 			}
-			if value := strings.TrimSpace(group[i].Spec.Template.Annotations[key]); value != "" {
+			if value := readMapValueWithLegacy(group[i].Spec.Template.Annotations, key); value != "" {
 				return value
 			}
 		}
@@ -818,10 +885,10 @@ func detectInstanceAnnotation(group []appsv1.Deployment, key string) string {
 		return ""
 	}
 	for i := range group {
-		if value := strings.TrimSpace(group[i].Annotations[annotationKey]); value != "" {
+		if value := readMapValueWithLegacy(group[i].Annotations, annotationKey); value != "" {
 			return value
 		}
-		if value := strings.TrimSpace(group[i].Spec.Template.Annotations[annotationKey]); value != "" {
+		if value := readMapValueWithLegacy(group[i].Spec.Template.Annotations, annotationKey); value != "" {
 			return value
 		}
 	}
@@ -932,7 +999,7 @@ func parseInstanceState(annotations map[string]string) openClawInstanceState {
 	if len(annotations) == 0 {
 		return openClawInstanceState{}
 	}
-	raw := strings.TrimSpace(annotations[openClawInstanceStateAnnotation])
+	raw := readMapValueWithLegacy(annotations, openClawInstanceStateAnnotation)
 	if raw == "" {
 		return openClawInstanceState{}
 	}
@@ -988,6 +1055,7 @@ func applyTemplateResources(
 ) error {
 	// Owner/Instance 元信息需要覆盖到所有资源与 workload PodTemplate，保证后续筛选一致。
 	identityLabels := map[string]string{
+		OpenClawInstanceLabelType:     strings.TrimSpace(labels[OpenClawInstanceLabelType]),
 		OpenClawInstanceLabelOwner:    strings.TrimSpace(labels[OpenClawInstanceLabelOwner]),
 		OpenClawInstanceLabelOwnerID:  strings.TrimSpace(labels[OpenClawInstanceLabelOwnerID]),
 		OpenClawInstanceLabelInstance: strings.TrimSpace(labels[OpenClawInstanceLabelInstance]),
@@ -1168,12 +1236,42 @@ func resolveTemplateResourceGVR(ctx context.Context, disco *discovery.DiscoveryC
 }
 
 func deleteInstanceResources(ctx context.Context, dc dynamic.Interface, disco *discovery.DiscoveryClient, namespace, instanceName, ownerID string) error {
-	selectorParts := []string{fmt.Sprintf("%s=%s", OpenClawInstanceLabelInstance, instanceName)}
+	instanceSelectors := buildLegacyAwareLabelSelectors(OpenClawInstanceLabelInstance, instanceName)
+	ownerSelectors := []string{""}
 	if strings.TrimSpace(ownerID) != "" {
-		selectorParts = append(selectorParts, fmt.Sprintf("%s=%s", OpenClawInstanceLabelOwner, ownerID))
+		ownerSelectors = buildLegacyAwareLabelSelectors(OpenClawInstanceLabelOwner, ownerID)
 	}
-	selectorParts = append(selectorParts, fmt.Sprintf("%s=%s", OpenClawInstanceLabelManagedBy, openClawDefaultManagedByValue))
-	selector := strings.Join(selectorParts, ",")
+	managedBySelectors := buildLegacyAwareLabelSelectors(OpenClawInstanceLabelManagedBy, openClawDefaultManagedByValue)
+	typeSelector := fmt.Sprintf("%s=%s", OpenClawInstanceLabelType, openClawInstanceTypeValue)
+	selectors := make([]string, 0, len(instanceSelectors)*len(ownerSelectors)*len(managedBySelectors))
+	selectorSeen := map[string]struct{}{}
+	appendSelector := func(selector string) {
+		selector = strings.TrimSpace(selector)
+		if selector == "" {
+			return
+		}
+		if _, exists := selectorSeen[selector]; exists {
+			return
+		}
+		selectorSeen[selector] = struct{}{}
+		selectors = append(selectors, selector)
+	}
+	for _, instanceSelector := range instanceSelectors {
+		for _, ownerSelector := range ownerSelectors {
+			for _, managedBySelector := range managedBySelectors {
+				parts := []string{instanceSelector, managedBySelector, typeSelector}
+				if ownerSelector != "" {
+					parts = append(parts, ownerSelector)
+				}
+				appendSelector(strings.Join(parts, ","))
+				legacyParts := []string{instanceSelector, managedBySelector}
+				if ownerSelector != "" {
+					legacyParts = append(legacyParts, ownerSelector)
+				}
+				appendSelector(strings.Join(legacyParts, ","))
+			}
+		}
+	}
 
 	apiResourceLists, err := disco.ServerPreferredNamespacedResources()
 	if err != nil && !discovery.IsGroupDiscoveryFailedError(err) {
@@ -1194,29 +1292,34 @@ func deleteInstanceResources(ctx context.Context, dc dynamic.Interface, disco *d
 			}
 			gvr := schema.GroupVersionResource{Group: gv.Group, Version: gv.Version, Resource: resource.Name}
 			res := dc.Resource(gvr).Namespace(namespace)
-			items, listErr := res.List(ctx, metav1.ListOptions{LabelSelector: selector})
-			if listErr != nil {
-				if apierrors.IsForbidden(listErr) || apierrors.IsMethodNotSupported(listErr) || apierrors.IsNotFound(listErr) {
+			for _, selector := range selectors {
+				items, listErr := res.List(ctx, metav1.ListOptions{LabelSelector: selector})
+				if listErr != nil {
+					if apierrors.IsForbidden(listErr) || apierrors.IsMethodNotSupported(listErr) || apierrors.IsNotFound(listErr) {
+						continue
+					}
 					continue
 				}
-				continue
-			}
-			for i := range items.Items {
-				name := items.Items[i].GetName()
-				if name == "" {
-					continue
+				for i := range items.Items {
+					name := items.Items[i].GetName()
+					if name == "" {
+						continue
+					}
+					if delErr := res.Delete(ctx, name, metav1.DeleteOptions{}); delErr != nil && !apierrors.IsNotFound(delErr) {
+						return delErr
+					}
+					deletedAny = true
 				}
-				if delErr := res.Delete(ctx, name, metav1.DeleteOptions{}); delErr != nil && !apierrors.IsNotFound(delErr) {
-					return delErr
-				}
-				deletedAny = true
 			}
 		}
 	}
 	if !deletedAny {
 		// 兜底清理 Deployment（最小可控资源）
-		if delErr := dc.Resource(schema.GroupVersionResource{Group: "apps", Version: "v1", Resource: "deployments"}).Namespace(namespace).DeleteCollection(ctx, metav1.DeleteOptions{}, metav1.ListOptions{LabelSelector: selector}); delErr != nil && !apierrors.IsNotFound(delErr) {
-			return delErr
+		res := dc.Resource(schema.GroupVersionResource{Group: "apps", Version: "v1", Resource: "deployments"}).Namespace(namespace)
+		for _, selector := range selectors {
+			if delErr := res.DeleteCollection(ctx, metav1.DeleteOptions{}, metav1.ListOptions{LabelSelector: selector}); delErr != nil && !apierrors.IsNotFound(delErr) {
+				return delErr
+			}
 		}
 	}
 	return nil
@@ -1603,8 +1706,8 @@ func instanceGatewayTokenSecretRef(instance OpenClawInstance) *OpenClawSecretRef
 	name := ""
 	key := ""
 	if instance.Annotations != nil {
-		name = strings.TrimSpace(instance.Annotations[openClawGatewayTokenSecretName])
-		key = strings.TrimSpace(instance.Annotations[openClawGatewayTokenSecretKey])
+		name = readMapValueWithLegacy(instance.Annotations, openClawGatewayTokenSecretName)
+		key = readMapValueWithLegacy(instance.Annotations, openClawGatewayTokenSecretKey)
 	}
 	if name == "" {
 		return nil

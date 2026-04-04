@@ -4,9 +4,10 @@ metadata:
   name: openclaw-template-enterprise
   namespace: openclaw
   labels:
-    efucloud.com/openclaw.template: "true"
+    efucloud.com/claw.template: "true"
+    efucloud.com/claw.type: "openclaw"
   annotations:
-    efucloud.com/openclaw.template.description: "企业共享 OpenClaw 模板（生产版，含 PVC/Service/Ingress）"
+    efucloud.com/claw.template.description: "企业共享 OpenClaw 模板（生产版，含 PVC/Service/Ingress）"
 data:
   schema: |
     {
@@ -150,7 +151,7 @@ data:
         app.kubernetes.io/instance: {{ .instanceName }}
       {{- if .previewEndpoint }}
       annotations:
-        efucloud.com/openclaw.endpoint: "{{ .previewEndpoint }}"
+        efucloud.com/claw.endpoint: "{{ .previewEndpoint }}"
       {{- end }}
     spec:
       replicas: {{ .replicas }}
@@ -170,7 +171,7 @@ data:
             app.kubernetes.io/instance: {{ .instanceName }}
           {{- if .previewEndpoint }}
           annotations:
-            efucloud.com/openclaw.endpoint: "{{ .previewEndpoint }}"
+            efucloud.com/claw.endpoint: "{{ .previewEndpoint }}"
           {{- end }}
         spec:
           automountServiceAccountToken: false

@@ -42,9 +42,7 @@ func RefreshRuntimeInsightsCache(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	deployList, err := kc.AppsV1().Deployments("").List(ctx, metav1.ListOptions{
-		LabelSelector: OpenClawInstanceLabelInstance,
-	})
+	deployments, err := listInstanceDeployments(ctx, kc, "", "")
 	if err != nil {
 		return err
 	}
@@ -54,11 +52,11 @@ func RefreshRuntimeInsightsCache(ctx context.Context) error {
 		name      string
 	}
 	refs := map[string]instanceRef{}
-	for i := range deployList.Items {
-		dep := deployList.Items[i]
-		instanceName := strings.TrimSpace(dep.Labels[OpenClawInstanceLabelInstance])
+	for i := range deployments {
+		dep := deployments[i]
+		instanceName := readMapValueWithLegacy(dep.Labels, OpenClawInstanceLabelInstance)
 		if instanceName == "" {
-			instanceName = strings.TrimSpace(dep.Annotations[openClawInstanceAnnotation])
+			instanceName = readMapValueWithLegacy(dep.Annotations, openClawInstanceAnnotation)
 		}
 		if instanceName == "" {
 			instanceName = strings.TrimSpace(dep.Name)
@@ -111,13 +109,11 @@ func collectRuntimeInsightsForInstance(
 	restCfg *rest.Config,
 	namespace, instanceName string,
 ) (OpenClawRuntimeInsights, error) {
-	pods, err := kc.CoreV1().Pods(namespace).List(ctx, metav1.ListOptions{
-		LabelSelector: fmt.Sprintf("%s=%s", OpenClawInstanceLabelInstance, instanceName),
-	})
+	pods, err := listInstancePods(ctx, kc, namespace, instanceName)
 	if err != nil {
 		return OpenClawRuntimeInsights{}, err
 	}
-	pod, container, err := pickTelemetryTargetPod(pods.Items)
+	pod, container, err := pickTelemetryTargetPod(pods)
 	if err != nil {
 		return OpenClawRuntimeInsights{}, err
 	}
@@ -200,6 +196,27 @@ func collectRuntimeInsightsForInstance(
 		out.SessionIndexFilesCount = parseIntLoose(sessionIndexCountRaw)
 	}
 
+	return out, nil
+}
+
+func listInstancePods(ctx context.Context, kc *kubernetes.Clientset, namespace, instanceName string) ([]corev1.Pod, error) {
+	selectors := buildLegacyAwareLabelSelectors(OpenClawInstanceLabelInstance, instanceName)
+	out := make([]corev1.Pod, 0)
+	seen := map[string]struct{}{}
+	for _, selector := range selectors {
+		list, err := kc.CoreV1().Pods(namespace).List(ctx, metav1.ListOptions{LabelSelector: selector})
+		if err != nil {
+			return nil, err
+		}
+		for i := range list.Items {
+			key := list.Items[i].Namespace + "/" + list.Items[i].Name
+			if _, exists := seen[key]; exists {
+				continue
+			}
+			seen[key] = struct{}{}
+			out = append(out, list.Items[i])
+		}
+	}
 	return out, nil
 }
 
