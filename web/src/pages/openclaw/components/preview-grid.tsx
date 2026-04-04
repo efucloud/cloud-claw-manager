@@ -1,4 +1,4 @@
-import { ExpandOutlined, LinkOutlined } from '@ant-design/icons';
+import { CompressOutlined, ExpandOutlined, LinkOutlined } from '@ant-design/icons';
 import { useIntl } from '@umijs/max';
 import { Button, Card, Col, Empty, Modal, Row, Space, Tag } from 'antd';
 import React, { useMemo, useState } from 'react';
@@ -127,6 +127,7 @@ const OpenClawPreviewGrid: React.FC<Props> = ({ instances }) => {
       <Modal
         open={Boolean(active)}
         className={styles.fullscreenModal}
+        closeIcon={<CompressOutlined className={styles.fullscreenCloseIcon} />}
         title={
           active
             ? intl.formatMessage(
@@ -149,12 +150,16 @@ const OpenClawPreviewGrid: React.FC<Props> = ({ instances }) => {
         onCancel={() => setActive(null)}
       >
         {active && activePreviewable ? (
-          <iframe
-            className={styles.fullscreenFrame}
-            src={activeEndpoint}
-            title={`fullscreen-${buildKey(active)}`}
-            sandbox="allow-forms allow-modals allow-pointer-lock allow-popups allow-same-origin allow-scripts"
-          />
+          <div className={styles.fullscreenStage}>
+            <div className={styles.fullscreenViewport}>
+              <iframe
+                className={styles.fullscreenFrame}
+                src={activeEndpoint}
+                title={`fullscreen-${buildKey(active)}`}
+                sandbox="allow-forms allow-modals allow-pointer-lock allow-popups allow-same-origin allow-scripts"
+              />
+            </div>
+          </div>
         ) : (
           <Empty description={intl.formatMessage({ id: 'pages.openclaw.preview.address.unavailable' })} />
         )}
