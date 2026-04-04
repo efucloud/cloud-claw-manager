@@ -53,6 +53,7 @@ const (
 	openClawOwnerUsernameAnnotation  = "efucloud.com/openclaw.owner.username"
 	openClawOwnerEmailAnnotation     = "efucloud.com/openclaw.owner.email"
 	openClawInstanceAnnotation       = "efucloud.com/openclaw.instance"
+	openClawIngressHideHeadersAnno   = "nginx.ingress.kubernetes.io/proxy-hide-headers"
 )
 
 var (
@@ -244,30 +245,53 @@ type OpenClawProviderBreakdown struct {
 }
 
 type OpenClawInstanceTelemetry struct {
-	Namespace          string   `json:"namespace"`
-	Name               string   `json:"name"`
-	DisplayName        string   `json:"displayName,omitempty"`
-	Purpose            string   `json:"purpose,omitempty"`
-	OwnerID            string   `json:"ownerId,omitempty"`
-	OwnerUsername      string   `json:"ownerUsername,omitempty"`
-	OwnerEmail         string   `json:"ownerEmail,omitempty"`
-	Accessible         bool     `json:"accessible"`
-	ReadyPods          int      `json:"readyPods"`
-	Provider           string   `json:"provider,omitempty"`
-	Endpoint           string   `json:"endpoint,omitempty"`
-	GatewayToken       string   `json:"gatewayToken,omitempty"`
-	ProviderCandidates []string `json:"providerCandidates,omitempty"`
-	ProviderPrimary    string   `json:"providerPrimary,omitempty"`
-	ProviderModelIDs   []string `json:"providerModelIds,omitempty"`
-	ProviderBaseURL    string   `json:"providerBaseUrl,omitempty"`
-	ProviderAPIType    string   `json:"providerApiType,omitempty"`
-	MemoryBytes        float64  `json:"memoryBytes"`
-	NetworkRxBytesPS   float64  `json:"networkRxBytesPerSecond"`
-	NetworkTxBytesPS   float64  `json:"networkTxBytesPerSecond"`
-	InputTokens24h     float64  `json:"inputTokens24h"`
-	OutputTokens24h    float64  `json:"outputTokens24h"`
-	CostUSD24h         float64  `json:"costUSD24h"`
-	UpdatedAt          string   `json:"updatedAt,omitempty"`
+	Namespace          string                   `json:"namespace"`
+	Name               string                   `json:"name"`
+	DisplayName        string                   `json:"displayName,omitempty"`
+	Purpose            string                   `json:"purpose,omitempty"`
+	OwnerID            string                   `json:"ownerId,omitempty"`
+	OwnerUsername      string                   `json:"ownerUsername,omitempty"`
+	OwnerEmail         string                   `json:"ownerEmail,omitempty"`
+	Accessible         bool                     `json:"accessible"`
+	ReadyPods          int                      `json:"readyPods"`
+	Provider           string                   `json:"provider,omitempty"`
+	Endpoint           string                   `json:"endpoint,omitempty"`
+	GatewayToken       string                   `json:"gatewayToken,omitempty"`
+	ProviderCandidates []string                 `json:"providerCandidates,omitempty"`
+	ProviderPrimary    string                   `json:"providerPrimary,omitempty"`
+	ProviderModelIDs   []string                 `json:"providerModelIds,omitempty"`
+	ProviderBaseURL    string                   `json:"providerBaseUrl,omitempty"`
+	ProviderAPIType    string                   `json:"providerApiType,omitempty"`
+	MemoryBytes        float64                  `json:"memoryBytes"`
+	NetworkRxBytesPS   float64                  `json:"networkRxBytesPerSecond"`
+	NetworkTxBytesPS   float64                  `json:"networkTxBytesPerSecond"`
+	InputTokens24h     float64                  `json:"inputTokens24h"`
+	OutputTokens24h    float64                  `json:"outputTokens24h"`
+	CostUSD24h         float64                  `json:"costUSD24h"`
+	RuntimeInsights    *OpenClawRuntimeInsights `json:"runtimeInsights,omitempty"`
+	UpdatedAt          string                   `json:"updatedAt,omitempty"`
+}
+
+type OpenClawRuntimeInsights struct {
+	CollectedAt                string   `json:"collectedAt,omitempty"`
+	SourcePod                  string   `json:"sourcePod,omitempty"`
+	SourceContainer            string   `json:"sourceContainer,omitempty"`
+	StatusState                string   `json:"statusState,omitempty"`
+	GatewayState               string   `json:"gatewayState,omitempty"`
+	SecurityState              string   `json:"securityState,omitempty"`
+	RuntimeVersion             string   `json:"runtimeVersion,omitempty"`
+	OpenClawConfigPath         string   `json:"openclawConfigPath,omitempty"`
+	OpenClawAgentsCount        int      `json:"openclawAgentsCount,omitempty"`
+	OpenClawProvidersCount     int      `json:"openclawProvidersCount,omitempty"`
+	OpenClawPrimaryModel       string   `json:"openclawPrimaryModel,omitempty"`
+	OpenClawWorkspace          string   `json:"openclawWorkspace,omitempty"`
+	ControlUiDisableDeviceAuth *bool    `json:"controlUiDisableDeviceAuth,omitempty"`
+	ControlUiAllowedOrigins    []string `json:"controlUiAllowedOrigins,omitempty"`
+	CronJobsCount              int      `json:"cronJobsCount,omitempty"`
+	SessionIndexFilesCount     int      `json:"sessionIndexFilesCount,omitempty"`
+	SessionCount               int      `json:"sessionCount,omitempty"`
+	SessionLastUpdatedAt       string   `json:"sessionLastUpdatedAt,omitempty"`
+	LastError                  string   `json:"lastError,omitempty"`
 }
 
 type openClawInstanceState struct {
@@ -452,6 +476,10 @@ func (s OpenClawInstanceService) CreateInstance(ctx context.Context, requesterID
 		if err != nil {
 			return OpenClawInstance{}, err
 		}
+	}
+	templateSpec.Resources, err = injectIngressPreviewAnnotations(templateSpec.Resources)
+	if err != nil {
+		return OpenClawInstance{}, err
 	}
 
 	gatewayTokenRef := normalizeSecretRef(req.Gateway.TokenSecretRef)
@@ -840,6 +868,64 @@ func injectDeploymentEndpointAnnotations(resources []runtime.RawExtension, endpo
 		out = append(out, runtime.RawExtension{Raw: nextRaw})
 	}
 	return out, nil
+}
+
+func injectIngressPreviewAnnotations(resources []runtime.RawExtension) ([]runtime.RawExtension, error) {
+	if len(resources) == 0 {
+		return resources, nil
+	}
+	out := make([]runtime.RawExtension, 0, len(resources))
+	for i := range resources {
+		raw := bytes.TrimSpace(resources[i].Raw)
+		if len(raw) == 0 {
+			continue
+		}
+		obj := map[string]interface{}{}
+		if err := json.Unmarshal(raw, &obj); err != nil {
+			return nil, fmt.Errorf("%w: template resource[%d] is not valid JSON: %v", ErrOpenClawInvalidInput, i, err)
+		}
+		kind := strings.TrimSpace(fmt.Sprintf("%v", obj["kind"]))
+		if strings.EqualFold(kind, "Ingress") {
+			meta := ensureObjectMap(obj, "metadata")
+			annotations := ensureStringMap(meta, "annotations")
+			annotations[openClawIngressHideHeadersAnno] = mergeCSVAnnotationValue(
+				annotations[openClawIngressHideHeadersAnno],
+				[]string{"X-Frame-Options", "Content-Security-Policy"},
+			)
+			meta["annotations"] = annotations
+			obj["metadata"] = meta
+		}
+		nextRaw, err := json.Marshal(obj)
+		if err != nil {
+			return nil, err
+		}
+		out = append(out, runtime.RawExtension{Raw: nextRaw})
+	}
+	return out, nil
+}
+
+func mergeCSVAnnotationValue(current string, required []string) string {
+	values := make([]string, 0, len(required)+2)
+	seen := map[string]struct{}{}
+	appendValue := func(raw string) {
+		item := strings.TrimSpace(raw)
+		if item == "" {
+			return
+		}
+		key := strings.ToLower(item)
+		if _, ok := seen[key]; ok {
+			return
+		}
+		seen[key] = struct{}{}
+		values = append(values, item)
+	}
+	for _, item := range strings.Split(current, ",") {
+		appendValue(item)
+	}
+	for _, item := range required {
+		appendValue(item)
+	}
+	return strings.Join(values, ",")
 }
 
 func parseInstanceState(annotations map[string]string) openClawInstanceState {
@@ -1722,7 +1808,7 @@ func buildPreviewEndpoint(namespace, instanceName, baseDomain string) string {
 	if domain == "" {
 		return ""
 	}
-	return fmt.Sprintf("https://%s.%s.%s", name, ns, domain)
+	return fmt.Sprintf("https://%s-%s.%s", name, ns, domain)
 }
 
 func extractEndpointHost(rawEndpoint string) string {

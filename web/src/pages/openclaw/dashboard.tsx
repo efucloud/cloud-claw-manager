@@ -1,20 +1,18 @@
 import { openclawDashboard } from '@/services/openclaw.api';
 import { PlusOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-components';
-import { history, useIntl, useLocation, useModel } from '@umijs/max';
+import { history, useIntl, useLocation } from '@umijs/max';
 import { Button, Card, Col, Empty, Row, Spin, Statistic, message } from 'antd';
 import React, { useCallback, useEffect, useState } from 'react';
 import OpenClawCreateInstanceModal from './components/create-instance-modal';
 import OpenClawPreviewGrid from './components/preview-grid';
+import { toNumber } from './format';
 import type { DashboardResponse } from './types';
 import styles from './dashboard.less';
-
-const toNumber = (value?: number) => Number(value || 0);
 
 const OpenClawDashboardPage: React.FC = () => {
   const intl = useIntl();
   const location = useLocation();
-  const { initialState } = useModel('@@initialState');
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<DashboardResponse>({});
   const [createVisible, setCreateVisible] = useState<boolean>(false);
@@ -58,17 +56,14 @@ const OpenClawDashboardPage: React.FC = () => {
   }, [loadData]);
 
   const instanceRows = data.instances || [];
-  const isAdmin = String(initialState?.currentUser?.role || '').toLowerCase() === 'admin';
 
   return (
     <PageContainer
       title={false}
       extra={[
-        isAdmin ? (
-          <Button key="admin-board" onClick={() => history.push('/admin/dashboard')}>
-            {intl.formatMessage({ id: 'pages.openclaw.action.adminBoard' })}
-          </Button>
-        ) : null,
+        <Button key="user-stats" onClick={() => history.push('/dashboard/stats')}>
+          {intl.formatMessage({ id: 'pages.openclaw.action.userStats' })}
+        </Button>,
         <Button key="create" type="primary" icon={<PlusOutlined />} onClick={() => setCreateVisible(true)}>
           {intl.formatMessage({ id: 'pages.openclaw.action.create' })}
         </Button>,
@@ -108,7 +103,6 @@ const OpenClawDashboardPage: React.FC = () => {
                   </Card>
                 </Col>
               </Row>
-
               <OpenClawPreviewGrid instances={instanceRows} />
             </>
           )}

@@ -22,7 +22,9 @@ data:
       "gatewaySecretSuffix": "gateway-secret",
       "modelBaseUrl": "https://dashscope.aliyuncs.com/compatible-mode/v1",
       "modelPrimaryId": "qwen-max",
+      "dashboardOrigin": "https://dashboard.openclaw.efucloud.com",
       "trustedProxiesJson": "[\"0.0.0.0/0\",\"::/0\"]",
+      "certManagerClusterIssuer": "letsencrypt-dns-prod",
       "pvcSize": "10Gi",
       "pvcStorageClassName": ""
     }
@@ -453,6 +455,16 @@ data:
           app.kubernetes.io/instance: {{ .instanceName }}
     {{- if and .ingressEnabled .previewHost }}
     ---
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: {{ .instanceName }}-ingress-custom-headers
+      labels:
+        app.kubernetes.io/name: openclaw
+        app.kubernetes.io/instance: {{ .instanceName }}
+    data:
+      Content-Security-Policy: "frame-ancestors 'self' {{ .dashboardOrigin }} https://{{ .previewHost }} https://*.openclaw.efucloud.com"
+    ---
     apiVersion: networking.k8s.io/v1
     kind: Ingress
     metadata:
@@ -468,12 +480,13 @@ data:
         {{- if .ingressTlsEnabled }}
         nginx.ingress.kubernetes.io/ssl-redirect: "true"
         nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        {{- if .certManagerClusterIssuer }}
+        cert-manager.io/cluster-issuer: "{{ .certManagerClusterIssuer }}"
         {{- end }}
-        # Allow dashboard iframe preview by replacing restrictive upstream headers.
-        nginx.ingress.kubernetes.io/configuration-snippet: |
-          proxy_hide_header X-Frame-Options;
-          proxy_hide_header Content-Security-Policy;
-          add_header Content-Security-Policy "frame-ancestors 'self' http://localhost:8000 http://127.0.0.1:8000 http://localhost:8080 http://127.0.0.1:8080 https://localhost:8443 https://127.0.0.1:8443 http://{{ .previewHost }}:8080 https://{{ .previewHost }} http://*.openclawefucloud.com https://*.openclawefucloud.com" always;
+        {{- end }}
+        # Allow dashboard iframe preview without snippet directives (public cloud friendly).
+        nginx.ingress.kubernetes.io/proxy-hide-headers: "X-Frame-Options,Content-Security-Policy"
+        nginx.ingress.kubernetes.io/custom-headers: "{{ .namespace }}/{{ .instanceName }}-ingress-custom-headers"
     spec:
       ingressClassName: {{ .ingressClassName }}
       rules:
@@ -487,10 +500,10 @@ data:
                     name: {{ .instanceName }}
                     port:
                       number: {{ .servicePort }}
-      {{- if and .ingressTlsEnabled .ingressTlsSecretName }}
+      {{- if .ingressTlsEnabled }}
       tls:
         - hosts:
             - {{ .previewHost }}
-          secretName: {{ .ingressTlsSecretName }}
+          secretName: {{ if .certManagerClusterIssuer }}{{ .instanceName }}-tls{{ else if .ingressTlsSecretName }}{{ .ingressTlsSecretName }}{{ else }}{{ .instanceName }}-tls{{ end }}
       {{- end }}
     {{- end }}

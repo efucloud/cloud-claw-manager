@@ -98,3 +98,35 @@ export async function openclawCreateInstance<T>(
     ...(options || {}),
   });
 }
+
+export async function openclawListInstances<T>(
+  params?: {
+    namespace?: string;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<T>(`/api/v1/openclaw/instances`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    params,
+    ...(options || {}),
+  });
+}
+
+export async function openclawGetInstance<T>(
+  namespace: string,
+  name: string,
+  options?: { [key: string]: any },
+) {
+  const ns = encodeURIComponent(namespace);
+  const nm = encodeURIComponent(name);
+  return request<T>(`/api/v1/openclaw/instances/${ns}/${nm}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    ...(options || {}),
+  });
+}

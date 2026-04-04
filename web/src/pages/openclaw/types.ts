@@ -27,7 +27,28 @@ export type InstanceTelemetry = {
   inputTokens24h?: number;
   outputTokens24h?: number;
   costUSD24h?: number;
+  runtimeInsights?: RuntimeInsights;
   updatedAt?: string;
+};
+
+export type RuntimeInsights = {
+  collectedAt?: string;
+  sourcePod?: string;
+  sourceContainer?: string;
+  statusState?: string;
+  gatewayState?: string;
+  securityState?: string;
+  runtimeVersion?: string;
+  openclawConfigPath?: string;
+  openclawAgentsCount?: number;
+  openclawProvidersCount?: number;
+  openclawPrimaryModel?: string;
+  openclawWorkspace?: string;
+  controlUiDisableDeviceAuth?: boolean;
+  controlUiAllowedOrigins?: string[];
+  cronJobsCount?: number;
+  sessionIndexFilesCount?: number;
+  lastError?: string;
 };
 
 export type DashboardOverview = {

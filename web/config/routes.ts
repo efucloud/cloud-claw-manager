@@ -30,6 +30,16 @@ export default [
     component: "./openclaw/dashboard",
   },
   {
+    path: "/dashboard/stats",
+    menuRender: false,
+    component: "./openclaw/user-stats",
+  },
+  {
+    path: "/openclaw/instance/:namespace/:name",
+    menuRender: false,
+    component: "./openclaw/instance-detail",
+  },
+  {
     path: "/admin/dashboard",
     menuRender: false,
     access: "adminAccess",

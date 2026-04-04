@@ -1,5 +1,5 @@
-import { LogoutOutlined } from '@ant-design/icons';
-import { FormattedMessage, useModel } from '@umijs/max';
+import { DashboardOutlined, LogoutOutlined } from '@ant-design/icons';
+import { FormattedMessage, history, useModel } from '@umijs/max';
 import { Spin } from 'antd';
 import { createStyles } from 'antd-style';
 import React, { useCallback } from 'react';
@@ -66,6 +66,9 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({
         loginOut();
         return;
       }
+      if (key === 'admin-dashboard') {
+        history.push('/admin/dashboard');
+      }
     },
     [setInitialState],
   );
@@ -89,13 +92,24 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({
     return loading;
   }
   const menuItems = (): ItemType[] => {
-    return [
+    const isAdmin = String(currentUser?.role || '').toLowerCase() === 'admin';
+    const items: ItemType[] = [
+      ...(isAdmin
+        ? [
+            {
+              key: 'admin-dashboard',
+              icon: <DashboardOutlined style={{ color: colorPrimary }} />,
+              label: <FormattedMessage id="pages.openclaw.action.adminBoard" />,
+            } as ItemType,
+          ]
+        : []),
       {
         key: 'logout',
         icon: <LogoutOutlined style={{ color: colorPrimary }} />,
         label: <FormattedMessage id="pages.personal.logout" key="logout" />,
       },
     ];
+    return items;
   };
   return (
     <HeaderDropdown

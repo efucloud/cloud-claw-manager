@@ -23,6 +23,24 @@ Cloud Claw Manager 是一个面向 Kubernetes 的 OpenClaw 实例管理平台。
 - 自动注入实例归属标签/注解（owner/instance）
 - 用户与管理员双看板能力
 - 无业务数据库，状态直接来源于 Kubernetes 资源
+- 从运行中 OpenClaw Pod 采集运行态洞察（`openclaw ... --json` + 配置/运行文件）
+
+## 运行态信息采集
+
+Manager 会周期性从每个 OpenClaw 实例 Pod 中采集运行诊断信息：
+
+- 命令：
+  - `openclaw status --json`
+  - `openclaw gateway status --json`
+  - `openclaw security audit --json`
+- 文件：
+  - `/home/node/.openclaw/openclaw.json`
+  - `/home/node/.openclaw/cron/jobs.json`
+  - `/home/node/.openclaw/agents/*/sessions/sessions.json`（仅统计数量）
+
+采集周期为 `45s`，结果通过看板接口的 `runtimeInsights` 字段返回。
+
+RBAC 要求：Manager 的 ServiceAccount 需要具备 `pods/exec` 的 `create` 权限。
 
 ## 认证系统
 

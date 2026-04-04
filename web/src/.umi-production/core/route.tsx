@@ -4,17 +4,19 @@
 import React from 'react';
 
 export async function getRoutes() {
-  const routes = {"1":{"path":"/","menuRender":false,"redirect":"/dashboard","parentId":"ant-design-pro-layout","id":"1"},"2":{"name":"","path":"/index","menuRender":false,"redirect":"/dashboard","parentId":"ant-design-pro-layout","id":"2"},"3":{"path":"/dashboard","menuRender":false,"parentId":"ant-design-pro-layout","id":"3"},"4":{"path":"/admin/dashboard","menuRender":false,"access":"adminAccess","parentId":"ant-design-pro-layout","id":"4"},"5":{"path":"/login","menuRender":false,"hideInMenu":true,"layout":false,"id":"5"},"6":{"name":"callback","layout":false,"path":"/oauth/callback","id":"6"},"7":{"path":"/*","parentId":"ant-design-pro-layout","id":"7"},"ant-design-pro-layout":{"id":"ant-design-pro-layout","path":"/","isLayout":true}} as const;
+  const routes = {"1":{"path":"/","menuRender":false,"redirect":"/dashboard","parentId":"ant-design-pro-layout","id":"1"},"2":{"name":"","path":"/index","menuRender":false,"redirect":"/dashboard","parentId":"ant-design-pro-layout","id":"2"},"3":{"path":"/dashboard","menuRender":false,"parentId":"ant-design-pro-layout","id":"3"},"4":{"path":"/dashboard/stats","menuRender":false,"parentId":"ant-design-pro-layout","id":"4"},"5":{"path":"/openclaw/instance/:namespace/:name","menuRender":false,"parentId":"ant-design-pro-layout","id":"5"},"6":{"path":"/admin/dashboard","menuRender":false,"access":"adminAccess","parentId":"ant-design-pro-layout","id":"6"},"7":{"path":"/login","menuRender":false,"hideInMenu":true,"layout":false,"id":"7"},"8":{"name":"callback","layout":false,"path":"/oauth/callback","id":"8"},"9":{"path":"/*","parentId":"ant-design-pro-layout","id":"9"},"ant-design-pro-layout":{"id":"ant-design-pro-layout","path":"/","isLayout":true}} as const;
   return {
     routes,
     routeComponents: {
 '1': React.lazy(() => import('./EmptyRoute')),
 '2': React.lazy(() => import('./EmptyRoute')),
 '3': React.lazy(() => import(/* webpackChunkName: "p__openclaw__dashboard" */'@/pages/openclaw/dashboard.tsx')),
-'4': React.lazy(() => import(/* webpackChunkName: "p__openclaw__admin-dashboard" */'@/pages/openclaw/admin-dashboard.tsx')),
-'5': React.lazy(() => import(/* webpackChunkName: "p__oauth__login" */'@/pages/oauth/login.tsx')),
-'6': React.lazy(() => import(/* webpackChunkName: "p__oauth__callback" */'@/pages/oauth/callback.tsx')),
-'7': React.lazy(() => import(/* webpackChunkName: "p__404" */'@/pages/404.tsx')),
+'4': React.lazy(() => import(/* webpackChunkName: "p__openclaw__user-stats" */'@/pages/openclaw/user-stats.tsx')),
+'5': React.lazy(() => import(/* webpackChunkName: "p__openclaw__instance-detail" */'@/pages/openclaw/instance-detail.tsx')),
+'6': React.lazy(() => import(/* webpackChunkName: "p__openclaw__admin-dashboard" */'@/pages/openclaw/admin-dashboard.tsx')),
+'7': React.lazy(() => import(/* webpackChunkName: "p__oauth__login" */'@/pages/oauth/login.tsx')),
+'8': React.lazy(() => import(/* webpackChunkName: "p__oauth__callback" */'@/pages/oauth/callback.tsx')),
+'9': React.lazy(() => import(/* webpackChunkName: "p__404" */'@/pages/404.tsx')),
 'ant-design-pro-layout': React.lazy(() => import(/* webpackChunkName: "t__plugin-layout__Layout" */'/Users/cloudy/Documents/efucloud/cloud-claw-manager/web/src/.umi-production/plugin-layout/Layout.tsx')),
 },
   };

@@ -137,7 +137,7 @@ func run(o *options.ServerRunOptions, stopCh <-chan struct{}) (err error) {
 	elector, err := leader.New(ctx, o.LeaderNamespace, LeaderLockName, LeaseDuration, RetryPeriod, leader.Callbacks{
 		OnStartedLeading: func(leaderCtx context.Context) {
 			config.Logger.Infof("acquired leadership, identity started services")
-			crons.StartCronJob()
+			crons.StartCronJob(leaderCtx)
 			pro := prometheus.NewRegistry()
 			mux := http.NewServeMux()
 			mux.Handle("/metrics", promhttp.HandlerFor(pro, promhttp.HandlerOpts{}))

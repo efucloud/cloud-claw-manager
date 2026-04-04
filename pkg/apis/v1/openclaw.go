@@ -349,6 +349,16 @@ func buildDashboardFromInstances(instances []openclaw.OpenClawInstance, includeG
 			ProviderAPIType:    providerAPIType,
 			UpdatedAt:          item.UpdatedAt.Format(time.RFC3339),
 		})
+		if runtimeInsights, ok := openclaw.GetRuntimeInsights(item.Namespace, item.Name); ok {
+			last := resp.Instances[len(resp.Instances)-1]
+			last.RuntimeInsights = &runtimeInsights
+			if sessionUpdatedAt := strings.TrimSpace(runtimeInsights.SessionLastUpdatedAt); sessionUpdatedAt != "" {
+				last.UpdatedAt = sessionUpdatedAt
+			} else if collectedAt := strings.TrimSpace(runtimeInsights.CollectedAt); collectedAt != "" {
+				last.UpdatedAt = collectedAt
+			}
+			resp.Instances[len(resp.Instances)-1] = last
+		}
 		providerCount[provider]++
 	}
 	for provider, count := range providerCount {

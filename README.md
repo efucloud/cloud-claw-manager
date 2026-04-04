@@ -23,6 +23,24 @@ This repository uses a unified full-stack layout:
 - Automatic ownership labels/annotations injection (owner/instance)
 - User and admin dashboards
 - No business database; state is aggregated from Kubernetes resources
+- Runtime insights collection from running OpenClaw pods (`openclaw ... --json` + config/runtime files)
+
+## Runtime Insights Collection
+
+The manager periodically collects runtime diagnostics from each OpenClaw instance pod:
+
+- Commands:
+  - `openclaw status --json`
+  - `openclaw gateway status --json`
+  - `openclaw security audit --json`
+- Files:
+  - `/home/node/.openclaw/openclaw.json`
+  - `/home/node/.openclaw/cron/jobs.json`
+  - `/home/node/.openclaw/agents/*/sessions/sessions.json` (count only)
+
+Collection runs every `45s` and is exposed in dashboard response under `runtimeInsights`.
+
+RBAC requirement: manager ServiceAccount must have `create` on `pods/exec`.
 
 ## Authentication
 

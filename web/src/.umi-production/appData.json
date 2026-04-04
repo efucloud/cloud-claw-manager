@@ -152,7 +152,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "register"
     },
@@ -186,7 +186,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register"
     },
@@ -263,7 +263,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register"
     },
@@ -283,7 +283,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register"
     },
@@ -1212,7 +1212,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register"
     },
@@ -1225,7 +1225,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 38
+        "register": 36
       },
       "enableBy": "register"
     },
@@ -1268,7 +1268,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register"
     },
@@ -1281,7 +1281,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register"
     },
@@ -1307,7 +1307,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 14
+        "register": 15
       }
     },
     "./node_modules/@umijs/preset-umi/dist/features/mpa/mpa": {
@@ -1319,7 +1319,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config"
     },
@@ -1332,7 +1332,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       }
     },
     "./node_modules/@umijs/preset-umi/dist/features/overrides/overrides": {
@@ -1386,7 +1386,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register"
     },
@@ -1399,7 +1399,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register"
     },
@@ -1464,7 +1464,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config"
     },
@@ -1477,7 +1477,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       }
     },
     "./node_modules/@umijs/preset-umi/dist/features/ssr/ssr": {
@@ -1528,7 +1528,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config"
     },
@@ -1541,7 +1541,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config"
     },
@@ -1554,7 +1554,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       }
     },
     "./node_modules/@umijs/preset-umi/dist/features/monorepo/redirect": {
@@ -1566,7 +1566,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 9
+        "register": 8
       },
       "enableBy": "config"
     },
@@ -1579,7 +1579,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       }
     },
     "./node_modules/@umijs/preset-umi/dist/features/clickToComponent/clickToComponent": {
@@ -1603,7 +1603,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config"
     },
@@ -1645,7 +1645,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register"
     },
@@ -1658,7 +1658,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       }
     },
     "./node_modules/@umijs/preset-umi/dist/features/mako/mako": {
@@ -1670,7 +1670,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config"
     },
@@ -1683,7 +1683,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       }
     },
     "./node_modules/@umijs/preset-umi/dist/features/hmrGuardian/hmrGuardian": {
@@ -1695,7 +1695,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 2
       }
     },
     "./node_modules/@umijs/preset-umi/dist/features/routePreloadOnLoad/routePreloadOnLoad": {
@@ -1707,7 +1707,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 13
+        "register": 11
       }
     },
     "./node_modules/@umijs/preset-umi/dist/features/forget/forget": {
@@ -1758,7 +1758,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 15
+        "register": 14
       },
       "enableBy": "register"
     },
@@ -1771,7 +1771,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 7
+        "register": 6
       }
     },
     "./node_modules/@umijs/preset-umi/dist/commands/help": {
@@ -1783,7 +1783,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register"
     },
@@ -1848,7 +1848,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register"
     },
@@ -1874,7 +1874,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register"
     },
@@ -1900,7 +1900,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register"
     },
@@ -1952,7 +1952,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register"
     },
@@ -1991,7 +1991,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register"
     },
@@ -2017,7 +2017,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 11
+        "register": 10
       },
       "enableBy": "register"
     },
@@ -2056,7 +2056,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config"
     },
@@ -2105,7 +2105,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 4
       },
       "enableBy": "config"
     },
@@ -2137,10 +2137,10 @@
             0
           ],
           "addLayouts": [
-            1
+            0
           ],
           "modifyAppData": [
-            1
+            0
           ]
         },
         "register": 1
@@ -2156,7 +2156,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config"
     },
@@ -2169,7 +2169,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config"
     },
@@ -2182,7 +2182,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config"
     },
@@ -2212,7 +2212,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register"
     },
@@ -2225,7 +2225,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       }
     },
     "./node_modules/@umijs/plugins/dist/qiankun/slave": {
@@ -2408,7 +2408,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 47
+        "register": 50
       },
       "enableBy": "config"
     },
@@ -2452,7 +2452,7 @@
             0
           ]
         },
-        "register": 25
+        "register": 27
       }
     },
     "./node_modules/@umijs/core/dist/service/generatePlugin": {
@@ -2464,7 +2464,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register"
     }
@@ -2492,6 +2492,16 @@
         "path": "/dashboard",
         "menuRender": false,
         "component": "./openclaw/dashboard"
+      },
+      {
+        "path": "/dashboard/stats",
+        "menuRender": false,
+        "component": "./openclaw/user-stats"
+      },
+      {
+        "path": "/openclaw/instance/:namespace/:name",
+        "menuRender": false,
+        "component": "./openclaw/instance-detail"
       },
       {
         "path": "/admin/dashboard",
@@ -2639,6 +2649,16 @@
         "path": "/dashboard",
         "menuRender": false,
         "component": "./openclaw/dashboard"
+      },
+      {
+        "path": "/dashboard/stats",
+        "menuRender": false,
+        "component": "./openclaw/user-stats"
+      },
+      {
+        "path": "/openclaw/instance/:namespace/:name",
+        "menuRender": false,
+        "component": "./openclaw/instance-detail"
       },
       {
         "path": "/admin/dashboard",
@@ -3662,50 +3682,72 @@
       "parentId": "ant-design-pro-layout",
       "id": "3",
       "absPath": "/dashboard",
-      "__content": "import { openclawDashboard } from '@/services/openclaw.api';\nimport { PlusOutlined } from '@ant-design/icons';\nimport { PageContainer } from '@ant-design/pro-components';\nimport { history, useIntl, useLocation, useModel } from '@umijs/max';\nimport { Button, Card, Col, Empty, Row, Spin, Statistic, message } from 'antd';\nimport React, { useCallback, useEffect, useState } from 'react';\nimport OpenClawCreateInstanceModal from './components/create-instance-modal';\nimport OpenClawPreviewGrid from './components/preview-grid';\nimport type { DashboardResponse } from './types';\nimport styles from './dashboard.less';\n\nconst toNumber = (value?: number) => Number(value || 0);\n\nconst OpenClawDashboardPage: React.FC = () => {\n  const intl = useIntl();\n  const location = useLocation();\n  const { initialState } = useModel('@@initialState');\n  const [loading, setLoading] = useState<boolean>(false);\n  const [data, setData] = useState<DashboardResponse>({});\n  const [createVisible, setCreateVisible] = useState<boolean>(false);\n\n  const loadData = useCallback(async () => {\n    setLoading(true);\n    try {\n      const resp = await openclawDashboard<DashboardResponse>();\n      const payload = (resp as any)?.data || resp;\n      setData(payload || {});\n    } catch (_error) {\n      message.error(intl.formatMessage({ id: 'pages.openclaw.dashboard.load.failed' }));\n    } finally {\n      setLoading(false);\n    }\n  }, [intl]);\n\n  useEffect(() => {\n    void loadData();\n  }, [loadData]);\n\n  useEffect(() => {\n    const params = new URLSearchParams(location.search || '');\n    if (params.get('openclawCreate') === '1') {\n      setCreateVisible(true);\n    }\n  }, [location.search]);\n\n  const closeCreateModal = useCallback(() => {\n    setCreateVisible(false);\n    const params = new URLSearchParams(location.search || '');\n    if (params.has('openclawCreate')) {\n      params.delete('openclawCreate');\n      const qs = params.toString();\n      history.replace(`${location.pathname}${qs ? `?${qs}` : ''}`);\n    }\n  }, [location.pathname, location.search]);\n\n  const handleCreated = useCallback(() => {\n    void loadData();\n  }, [loadData]);\n\n  const instanceRows = data.instances || [];\n  const isAdmin = String(initialState?.currentUser?.role || '').toLowerCase() === 'admin';\n\n  return (\n    <PageContainer\n      title={false}\n      extra={[\n        isAdmin ? (\n          <Button key=\"admin-board\" onClick={() => history.push('/admin/dashboard')}>\n            {intl.formatMessage({ id: 'pages.openclaw.action.adminBoard' })}\n          </Button>\n        ) : null,\n        <Button key=\"create\" type=\"primary\" icon={<PlusOutlined />} onClick={() => setCreateVisible(true)}>\n          {intl.formatMessage({ id: 'pages.openclaw.action.create' })}\n        </Button>,\n      ]}\n    >\n      <div className={styles.wrapper}>\n        <Spin spinning={loading}>\n          {instanceRows.length === 0 ? (\n            <div className={styles.emptyWrap}>\n              <Empty description={intl.formatMessage({ id: 'pages.openclaw.dashboard.empty.desc' })} />\n            </div>\n          ) : (\n            <>\n              <Row gutter={[16, 16]} className={styles.statRow}>\n                <Col xs={12} sm={8} md={8} lg={8} xl={8}>\n                  <Card>\n                    <Statistic\n                      title={intl.formatMessage({ id: 'pages.openclaw.kpi.instances' })}\n                      value={toNumber(data.overview?.totalInstances)}\n                    />\n                  </Card>\n                </Col>\n                <Col xs={12} sm={8} md={8} lg={8} xl={8}>\n                  <Card>\n                    <Statistic\n                      title={intl.formatMessage({ id: 'pages.openclaw.kpi.accessible' })}\n                      value={toNumber(data.overview?.accessibleInstances)}\n                    />\n                  </Card>\n                </Col>\n                <Col xs={12} sm={8} md={8} lg={8} xl={8}>\n                  <Card>\n                    <Statistic\n                      title={intl.formatMessage({ id: 'pages.openclaw.kpi.ready' })}\n                      value={toNumber(data.overview?.readyPods)}\n                    />\n                  </Card>\n                </Col>\n              </Row>\n\n              <OpenClawPreviewGrid instances={instanceRows} />\n            </>\n          )}\n        </Spin>\n      </div>\n\n      <OpenClawCreateInstanceModal visible={createVisible} onClose={closeCreateModal} onCreated={handleCreated} />\n    </PageContainer>\n  );\n};\n\nexport default OpenClawDashboardPage;\n",
+      "__content": "import { openclawDashboard } from '@/services/openclaw.api';\nimport { PlusOutlined } from '@ant-design/icons';\nimport { PageContainer } from '@ant-design/pro-components';\nimport { history, useIntl, useLocation } from '@umijs/max';\nimport { Button, Card, Col, Empty, Row, Spin, Statistic, message } from 'antd';\nimport React, { useCallback, useEffect, useState } from 'react';\nimport OpenClawCreateInstanceModal from './components/create-instance-modal';\nimport OpenClawPreviewGrid from './components/preview-grid';\nimport { toNumber } from './format';\nimport type { DashboardResponse } from './types';\nimport styles from './dashboard.less';\n\nconst OpenClawDashboardPage: React.FC = () => {\n  const intl = useIntl();\n  const location = useLocation();\n  const [loading, setLoading] = useState<boolean>(false);\n  const [data, setData] = useState<DashboardResponse>({});\n  const [createVisible, setCreateVisible] = useState<boolean>(false);\n\n  const loadData = useCallback(async () => {\n    setLoading(true);\n    try {\n      const resp = await openclawDashboard<DashboardResponse>();\n      const payload = (resp as any)?.data || resp;\n      setData(payload || {});\n    } catch (_error) {\n      message.error(intl.formatMessage({ id: 'pages.openclaw.dashboard.load.failed' }));\n    } finally {\n      setLoading(false);\n    }\n  }, [intl]);\n\n  useEffect(() => {\n    void loadData();\n  }, [loadData]);\n\n  useEffect(() => {\n    const params = new URLSearchParams(location.search || '');\n    if (params.get('openclawCreate') === '1') {\n      setCreateVisible(true);\n    }\n  }, [location.search]);\n\n  const closeCreateModal = useCallback(() => {\n    setCreateVisible(false);\n    const params = new URLSearchParams(location.search || '');\n    if (params.has('openclawCreate')) {\n      params.delete('openclawCreate');\n      const qs = params.toString();\n      history.replace(`${location.pathname}${qs ? `?${qs}` : ''}`);\n    }\n  }, [location.pathname, location.search]);\n\n  const handleCreated = useCallback(() => {\n    void loadData();\n  }, [loadData]);\n\n  const instanceRows = data.instances || [];\n\n  return (\n    <PageContainer\n      title={false}\n      extra={[\n        <Button key=\"user-stats\" onClick={() => history.push('/dashboard/stats')}>\n          {intl.formatMessage({ id: 'pages.openclaw.action.userStats' })}\n        </Button>,\n        <Button key=\"create\" type=\"primary\" icon={<PlusOutlined />} onClick={() => setCreateVisible(true)}>\n          {intl.formatMessage({ id: 'pages.openclaw.action.create' })}\n        </Button>,\n      ]}\n    >\n      <div className={styles.wrapper}>\n        <Spin spinning={loading}>\n          {instanceRows.length === 0 ? (\n            <div className={styles.emptyWrap}>\n              <Empty description={intl.formatMessage({ id: 'pages.openclaw.dashboard.empty.desc' })} />\n            </div>\n          ) : (\n            <>\n              <Row gutter={[16, 16]} className={styles.statRow}>\n                <Col xs={12} sm={8} md={8} lg={8} xl={8}>\n                  <Card>\n                    <Statistic\n                      title={intl.formatMessage({ id: 'pages.openclaw.kpi.instances' })}\n                      value={toNumber(data.overview?.totalInstances)}\n                    />\n                  </Card>\n                </Col>\n                <Col xs={12} sm={8} md={8} lg={8} xl={8}>\n                  <Card>\n                    <Statistic\n                      title={intl.formatMessage({ id: 'pages.openclaw.kpi.accessible' })}\n                      value={toNumber(data.overview?.accessibleInstances)}\n                    />\n                  </Card>\n                </Col>\n                <Col xs={12} sm={8} md={8} lg={8} xl={8}>\n                  <Card>\n                    <Statistic\n                      title={intl.formatMessage({ id: 'pages.openclaw.kpi.ready' })}\n                      value={toNumber(data.overview?.readyPods)}\n                    />\n                  </Card>\n                </Col>\n              </Row>\n              <OpenClawPreviewGrid instances={instanceRows} />\n            </>\n          )}\n        </Spin>\n      </div>\n\n      <OpenClawCreateInstanceModal visible={createVisible} onClose={closeCreateModal} onCreated={handleCreated} />\n    </PageContainer>\n  );\n};\n\nexport default OpenClawDashboardPage;\n",
       "__isJSFile": true,
       "__absFile": "/Users/cloudy/Documents/efucloud/cloud-claw-manager/web/src/pages/openclaw/dashboard.tsx"
     },
     "4": {
+      "path": "/dashboard/stats",
+      "menuRender": false,
+      "file": "@/pages/openclaw/user-stats.tsx",
+      "parentId": "ant-design-pro-layout",
+      "id": "4",
+      "absPath": "/dashboard/stats",
+      "__content": "import { openclawDashboard } from '@/services/openclaw.api';\nimport { ArrowLeftOutlined, EyeOutlined, ReloadOutlined } from '@ant-design/icons';\nimport { PageContainer } from '@ant-design/pro-components';\nimport { history, useIntl } from '@umijs/max';\nimport { Button, Card, Col, Empty, Row, Space, Spin, Statistic, Tag, message } from 'antd';\nimport React, { useCallback, useEffect, useMemo, useState } from 'react';\nimport { toNumber } from './format';\nimport type { DashboardResponse } from './types';\nimport styles from './dashboard.less';\n\nconst isOkState = (value?: string) => String(value || '').trim().toLowerCase() === 'ok';\n\nconst stateTagColor = (value?: string) => {\n  const text = String(value || '').trim().toLowerCase();\n  if (text === 'ok' || text === 'running' || text === 'active') {\n    return 'success';\n  }\n  if (text === 'warn' || text === 'warning') {\n    return 'warning';\n  }\n  if (text === 'critical' || text === 'error' || text === 'failed' || text === 'stopped') {\n    return 'error';\n  }\n  return 'default';\n};\n\nconst OpenClawUserStatsPage: React.FC = () => {\n  const intl = useIntl();\n  const [loading, setLoading] = useState<boolean>(false);\n  const [data, setData] = useState<DashboardResponse>({});\n\n  const loadData = useCallback(async () => {\n    setLoading(true);\n    try {\n      const resp = await openclawDashboard<DashboardResponse>({ includeGatewayToken: false });\n      const payload = (resp as any)?.data || resp;\n      setData(payload || {});\n    } catch (_error) {\n      message.error(intl.formatMessage({ id: 'pages.openclaw.dashboard.load.failed' }));\n    } finally {\n      setLoading(false);\n    }\n  }, [intl]);\n\n  useEffect(() => {\n    void loadData();\n  }, [loadData]);\n\n  const instanceRows = data.instances || [];\n  const runningInstances = useMemo(\n    () =>\n      instanceRows.filter(\n        (row) => Number(row.readyPods || 0) > 0 && Boolean(String(row.endpoint || '').trim()),\n      ).length,\n    [instanceRows],\n  );\n  const runtimeSummary = useMemo(() => {\n    let statusOk = 0;\n    let gatewayOk = 0;\n    let securityOk = 0;\n    instanceRows.forEach((item) => {\n      if (String(item.runtimeInsights?.statusState || '').toLowerCase() === 'ok') {\n        statusOk += 1;\n      }\n      if (String(item.runtimeInsights?.gatewayState || '').toLowerCase() === 'ok') {\n        gatewayOk += 1;\n      }\n      if (String(item.runtimeInsights?.securityState || '').toLowerCase() === 'ok') {\n        securityOk += 1;\n      }\n    });\n    return {\n      statusOk,\n      gatewayOk,\n      securityOk,\n    };\n  }, [instanceRows]);\n  const usageSummary = useMemo(() => {\n    return instanceRows.reduce(\n      (acc, row) => {\n        acc.input += toNumber(row.inputTokens24h);\n        acc.output += toNumber(row.outputTokens24h);\n        acc.cost += toNumber(row.costUSD24h);\n        return acc;\n      },\n      { input: 0, output: 0, cost: 0 },\n    );\n  }, [instanceRows]);\n  const interventionRows = useMemo(() => {\n    const rows = instanceRows\n      .map((item) => {\n        const reasons: string[] = [];\n        if (toNumber(item.readyPods) <= 0) {\n          reasons.push(intl.formatMessage({ id: 'pages.openclaw.userStats.reason.notReady' }));\n        }\n        if (!String(item.endpoint || '').trim()) {\n          reasons.push(intl.formatMessage({ id: 'pages.openclaw.userStats.reason.noEndpoint' }));\n        }\n        if (!isOkState(item.runtimeInsights?.statusState)) {\n          reasons.push(`Runtime:${item.runtimeInsights?.statusState || '-'}`);\n        }\n        if (!isOkState(item.runtimeInsights?.gatewayState)) {\n          reasons.push(`Gateway:${item.runtimeInsights?.gatewayState || '-'}`);\n        }\n        if (!isOkState(item.runtimeInsights?.securityState)) {\n          reasons.push(`Security:${item.runtimeInsights?.securityState || '-'}`);\n        }\n        return {\n          key: `${item.namespace || 'ns'}-${item.name || 'name'}`,\n          namespace: item.namespace || '',\n          name: item.name || '',\n          displayName: item.displayName || item.name || '-',\n          reasons,\n        };\n      })\n      .filter((item) => item.reasons.length > 0)\n      .slice(0, 8);\n    return rows;\n  }, [instanceRows, intl]);\n  const healthScore = useMemo(() => {\n    if (instanceRows.length === 0) {\n      return 100;\n    }\n    const okWeight =\n      runtimeSummary.statusOk + runtimeSummary.gatewayOk + runtimeSummary.securityOk + runningInstances;\n    const fullWeight = instanceRows.length * 4;\n    return Math.max(0, Math.min(100, Math.round((okWeight / fullWeight) * 100)));\n  }, [\n    instanceRows.length,\n    runtimeSummary.statusOk,\n    runtimeSummary.gatewayOk,\n    runtimeSummary.securityOk,\n    runningInstances,\n  ]);\n  const latestCollectedAt = useMemo(() => {\n    const times = instanceRows\n      .map((item) => String(item.runtimeInsights?.collectedAt || '').trim())\n      .filter((x) => Boolean(x))\n      .sort();\n    return times.length > 0 ? times[times.length - 1] : '-';\n  }, [instanceRows]);\n\n  return (\n    <PageContainer\n      title={intl.formatMessage({ id: 'pages.openclaw.userStats.title' })}\n      subTitle={intl.formatMessage({ id: 'pages.openclaw.userStats.subtitle' })}\n      extra={[\n        <Button key=\"refresh\" icon={<ReloadOutlined />} onClick={() => void loadData()}>\n          {intl.formatMessage({ id: 'pages.operation.refresh' })}\n        </Button>,\n        <Button key=\"back\" icon={<ArrowLeftOutlined />} onClick={() => history.push('/dashboard')}>\n          {intl.formatMessage({ id: 'pages.operation.back' })}\n        </Button>,\n      ]}\n    >\n      <div className={styles.wrapper}>\n        <Spin spinning={loading}>\n          <Row gutter={[16, 16]} className={styles.statRow}>\n            <Col xs={24} sm={24} md={24} lg={12} xl={12}>\n              <Card title={intl.formatMessage({ id: 'pages.openclaw.userStats.posture.title' })}>\n                <Row gutter={[12, 12]}>\n                  <Col span={8}>\n                    <Statistic\n                      title={intl.formatMessage({ id: 'pages.openclaw.userStats.posture.health' })}\n                      value={healthScore}\n                      suffix=\"/100\"\n                    />\n                  </Col>\n                  <Col span={8}>\n                    <Statistic\n                      title={intl.formatMessage({ id: 'pages.openclaw.userStats.posture.attention' })}\n                      value={interventionRows.length}\n                    />\n                  </Col>\n                  <Col span={8}>\n                    <Statistic\n                      title={intl.formatMessage({ id: 'pages.openclaw.userStats.posture.updatedAt' })}\n                      value={latestCollectedAt === '-' ? '-' : 'OK'}\n                    />\n                  </Col>\n                </Row>\n              </Card>\n            </Col>\n            <Col xs={24} sm={24} md={24} lg={12} xl={12}>\n              <Card title={intl.formatMessage({ id: 'pages.openclaw.userStats.usage.title' })}>\n                <Row gutter={[12, 12]}>\n                  <Col span={8}>\n                    <Statistic\n                      title={intl.formatMessage({ id: 'pages.openclaw.kpi.tokens.input' })}\n                      value={toNumber(usageSummary.input).toFixed(0)}\n                    />\n                  </Col>\n                  <Col span={8}>\n                    <Statistic\n                      title={intl.formatMessage({ id: 'pages.openclaw.kpi.tokens.output' })}\n                      value={toNumber(usageSummary.output).toFixed(0)}\n                    />\n                  </Col>\n                  <Col span={8}>\n                    <Statistic\n                      title={intl.formatMessage({ id: 'pages.openclaw.kpi.cost' })}\n                      value={toNumber(usageSummary.cost).toFixed(4)}\n                    />\n                  </Col>\n                </Row>\n              </Card>\n            </Col>\n          </Row>\n\n          <Row gutter={[16, 16]} className={styles.statRow}>\n            <Col xs={12} sm={8} md={8} lg={4} xl={4}>\n              <Card>\n                <Statistic\n                  title={intl.formatMessage({ id: 'pages.openclaw.kpi.instances' })}\n                  value={toNumber(data.overview?.totalInstances)}\n                />\n              </Card>\n            </Col>\n            <Col xs={12} sm={8} md={8} lg={4} xl={4}>\n              <Card>\n                <Statistic\n                  title={intl.formatMessage({ id: 'pages.openclaw.kpi.accessible' })}\n                  value={toNumber(data.overview?.accessibleInstances)}\n                />\n              </Card>\n            </Col>\n            <Col xs={12} sm={8} md={8} lg={4} xl={4}>\n              <Card>\n                <Statistic\n                  title={intl.formatMessage({ id: 'pages.openclaw.kpi.ready' })}\n                  value={runningInstances}\n                />\n              </Card>\n            </Col>\n            <Col xs={12} sm={8} md={8} lg={4} xl={4}>\n              <Card>\n                <Statistic\n                  title={intl.formatMessage({ id: 'pages.openclaw.userStats.status.ok' })}\n                  value={runtimeSummary.statusOk}\n                />\n              </Card>\n            </Col>\n            <Col xs={12} sm={8} md={8} lg={4} xl={4}>\n              <Card>\n                <Statistic\n                  title={intl.formatMessage({ id: 'pages.openclaw.userStats.gateway.ok' })}\n                  value={runtimeSummary.gatewayOk}\n                />\n              </Card>\n            </Col>\n            <Col xs={12} sm={8} md={8} lg={4} xl={4}>\n              <Card>\n                <Statistic\n                  title={intl.formatMessage({ id: 'pages.openclaw.userStats.security.ok' })}\n                  value={runtimeSummary.securityOk}\n                />\n              </Card>\n            </Col>\n          </Row>\n\n          <Card\n            className={styles.tableCard}\n            title={intl.formatMessage({ id: 'pages.openclaw.userStats.intervention.title' })}\n            bodyStyle={{ paddingTop: 8, paddingBottom: 8 }}\n          >\n            {interventionRows.length === 0 ? (\n              <Empty\n                image={Empty.PRESENTED_IMAGE_SIMPLE}\n                description={intl.formatMessage({ id: 'pages.openclaw.userStats.intervention.empty' })}\n              />\n            ) : (\n              <Space direction=\"vertical\" size={8} style={{ width: '100%' }}>\n                {interventionRows.map((item) => {\n                  const detailPath = `/openclaw/instance/${encodeURIComponent(\n                    String(item.namespace || ''),\n                  )}/${encodeURIComponent(String(item.name || ''))}`;\n                  return (\n                    <div key={item.key} className={styles.interventionRow}>\n                      <div>\n                        <strong>{item.displayName}</strong>\n                        <div className={styles.providerMeta}>{item.reasons.join(' | ')}</div>\n                      </div>\n                      <Button size=\"small\" icon={<EyeOutlined />} onClick={() => history.push(detailPath)}>\n                        {intl.formatMessage({ id: 'pages.openclaw.action.view' })}\n                      </Button>\n                    </div>\n                  );\n                })}\n              </Space>\n            )}\n          </Card>\n\n          <Card\n            className={styles.tableCard}\n            title={intl.formatMessage({ id: 'pages.openclaw.user.table.title' })}\n            bodyStyle={{ padding: 12 }}\n          >\n            {instanceRows.length === 0 ? (\n              <Empty description={intl.formatMessage({ id: 'pages.openclaw.dashboard.empty.desc' })} />\n            ) : (\n              <Row gutter={[12, 12]}>\n                {instanceRows.map((row) => {\n                  const detailPath = `/openclaw/instance/${encodeURIComponent(\n                    String(row.namespace || ''),\n                  )}/${encodeURIComponent(String(row.name || ''))}`;\n                  const runtime = row.runtimeInsights;\n                  const runtimeMetaParts: string[] = [];\n                  if (runtime?.runtimeVersion) {\n                    runtimeMetaParts.push(`v:${runtime.runtimeVersion}`);\n                  }\n                  if (runtime?.openclawWorkspace) {\n                    runtimeMetaParts.push(`ws:${runtime.openclawWorkspace}`);\n                  }\n                  if (runtime?.openclawPrimaryModel) {\n                    runtimeMetaParts.push(`model:${runtime.openclawPrimaryModel}`);\n                  }\n                  return (\n                    <Col xs={24} sm={12} xl={8} key={`${row.namespace || 'ns'}-${row.name || 'name'}`}>\n                      <Card\n                        size=\"small\"\n                        className={styles.instanceCompactCard}\n                        title={row.displayName || row.name || '-'}\n                        extra={\n                          Number(row.readyPods || 0) > 0 && Boolean(String(row.endpoint || '').trim()) ? (\n                            <Tag color=\"success\">{intl.formatMessage({ id: 'pages.openclaw.value.yes' })}</Tag>\n                          ) : (\n                            <Tag>{intl.formatMessage({ id: 'pages.openclaw.value.no' })}</Tag>\n                          )\n                        }\n                      >\n                        <div className={styles.instanceCompactMeta}>{row.namespace || '-'}</div>\n                        <div className={styles.instanceCompactPurpose}>{row.purpose || '-'}</div>\n                        <Space wrap size={[6, 6]} className={styles.instanceCompactStates}>\n                          <Tag color={stateTagColor(runtime?.statusState)}>S:{runtime?.statusState || '-'}</Tag>\n                          <Tag color={stateTagColor(runtime?.gatewayState)}>G:{runtime?.gatewayState || '-'}</Tag>\n                          <Tag color={stateTagColor(runtime?.securityState)}>A:{runtime?.securityState || '-'}</Tag>\n                        </Space>\n                        <div className={styles.providerMeta}>{runtimeMetaParts.join(' | ') || '-'}</div>\n                        {runtime?.lastError ? (\n                          <div className={styles.providerMeta}>{runtime.lastError}</div>\n                        ) : null}\n                        <div className={styles.instanceCompactFooter}>\n                          <span className={styles.providerMeta}>{row.updatedAt || '-'}</span>\n                          <Space size={8}>\n                            <Button\n                              size=\"small\"\n                              icon={<EyeOutlined />}\n                              disabled={!row.namespace || !row.name}\n                              onClick={() => history.push(detailPath)}\n                            >\n                              {intl.formatMessage({ id: 'pages.openclaw.action.view' })}\n                            </Button>\n                          </Space>\n                        </div>\n                      </Card>\n                    </Col>\n                  );\n                })}\n              </Row>\n            )}\n          </Card>\n        </Spin>\n      </div>\n    </PageContainer>\n  );\n};\n\nexport default OpenClawUserStatsPage;\n",
+      "__isJSFile": true,
+      "__absFile": "/Users/cloudy/Documents/efucloud/cloud-claw-manager/web/src/pages/openclaw/user-stats.tsx"
+    },
+    "5": {
+      "path": "/openclaw/instance/:namespace/:name",
+      "menuRender": false,
+      "file": "@/pages/openclaw/instance-detail.tsx",
+      "parentId": "ant-design-pro-layout",
+      "id": "5",
+      "absPath": "/openclaw/instance/:namespace/:name",
+      "__content": "import { openclawDashboard } from '@/services/openclaw.api';\nimport { ArrowLeftOutlined, ReloadOutlined } from '@ant-design/icons';\nimport { PageContainer } from '@ant-design/pro-components';\nimport { history, useIntl, useParams } from '@umijs/max';\nimport { Button, Card, Col, Descriptions, Empty, Row, Spin, Statistic, Tag, message } from 'antd';\nimport React, { useCallback, useEffect, useMemo, useState } from 'react';\nimport {\n  decodePart,\n  formatBytes,\n  formatNumber,\n  normalizeProvider,\n} from './format';\nimport type { DashboardResponse, InstanceTelemetry } from './types';\nimport styles from './dashboard.less';\n\nconst statusColor = (value?: string) => {\n  const text = String(value || '').trim().toLowerCase();\n  if (text === 'ok' || text === 'running' || text === 'active') {\n    return 'success';\n  }\n  if (text === 'warn' || text === 'warning') {\n    return 'warning';\n  }\n  if (text === 'critical' || text === 'error' || text === 'failed' || text === 'stopped') {\n    return 'error';\n  }\n  return 'default';\n};\n\nconst OpenClawInstanceDetailPage: React.FC = () => {\n  const intl = useIntl();\n  const params = useParams<{ namespace?: string; name?: string }>();\n  const namespace = decodePart(params?.namespace);\n  const name = decodePart(params?.name);\n  const [loading, setLoading] = useState<boolean>(false);\n  const [instance, setInstance] = useState<InstanceTelemetry | null>(null);\n\n  const ready = Number(instance?.readyPods || 0) > 0;\n  const runtime = instance?.runtimeInsights;\n\n  const loadData = useCallback(async () => {\n    if (!namespace || !name) {\n      setInstance(null);\n      return;\n    }\n    setLoading(true);\n    try {\n      const resp = await openclawDashboard<DashboardResponse>({\n        namespace,\n        includeGatewayToken: false,\n      });\n      const payload = (resp as any)?.data || resp || {};\n      const rows: InstanceTelemetry[] = payload.instances || [];\n      const matched = rows.find((item) => item.namespace === namespace && item.name === name) || null;\n      setInstance(matched);\n    } catch (_error) {\n      message.error(intl.formatMessage({ id: 'pages.openclaw.dashboard.load.failed' }));\n      setInstance(null);\n    } finally {\n      setLoading(false);\n    }\n  }, [intl, name, namespace]);\n\n  useEffect(() => {\n    void loadData();\n  }, [loadData]);\n\n  const pageTitle = useMemo(() => {\n    return instance?.displayName || instance?.name || name || intl.formatMessage({ id: 'pages.openclaw.instance.title' });\n  }, [instance?.displayName, instance?.name, intl, name]);\n\n  return (\n    <PageContainer\n      title={pageTitle}\n      subTitle={namespace && name ? `${namespace}/${name}` : undefined}\n      extra={[\n        <Button key=\"refresh\" icon={<ReloadOutlined />} onClick={() => void loadData()}>\n          {intl.formatMessage({ id: 'pages.operation.refresh' })}\n        </Button>,\n        <Button key=\"back\" icon={<ArrowLeftOutlined />} onClick={() => history.push('/dashboard')}>\n          {intl.formatMessage({ id: 'pages.operation.back' })}\n        </Button>,\n      ]}\n    >\n      <div className={styles.wrapper}>\n        <Spin spinning={loading}>\n          {!namespace || !name ? (\n            <div className={styles.emptyWrap}>\n              <Empty description={intl.formatMessage({ id: 'pages.openclaw.instance.invalid' })} />\n            </div>\n          ) : !instance ? (\n            <div className={styles.emptyWrap}>\n              <Empty description={intl.formatMessage({ id: 'pages.openclaw.instance.notFound' })} />\n            </div>\n          ) : (\n            <>\n              <Row gutter={[16, 16]} className={styles.statRow}>\n                <Col xs={12} sm={12} md={6} lg={6} xl={6}>\n                  <Card>\n                    <Statistic\n                      title={intl.formatMessage({ id: 'pages.dashboard.state.ready' })}\n                      value={ready ? intl.formatMessage({ id: 'pages.openclaw.value.yes' }) : intl.formatMessage({ id: 'pages.openclaw.value.no' })}\n                    />\n                  </Card>\n                </Col>\n                <Col xs={12} sm={12} md={6} lg={6} xl={6}>\n                  <Card>\n                    <Statistic\n                      title={intl.formatMessage({ id: 'pages.openclaw.kpi.tokens.input' })}\n                      value={formatNumber(instance.inputTokens24h, 0)}\n                    />\n                  </Card>\n                </Col>\n                <Col xs={12} sm={12} md={6} lg={6} xl={6}>\n                  <Card>\n                    <Statistic\n                      title={intl.formatMessage({ id: 'pages.openclaw.kpi.tokens.output' })}\n                      value={formatNumber(instance.outputTokens24h, 0)}\n                    />\n                  </Card>\n                </Col>\n                <Col xs={12} sm={12} md={6} lg={6} xl={6}>\n                  <Card>\n                    <Statistic\n                      title={intl.formatMessage({ id: 'pages.openclaw.kpi.cost' })}\n                      value={formatNumber(instance.costUSD24h, 4)}\n                    />\n                  </Card>\n                </Col>\n              </Row>\n\n              <Card className={styles.detailCard} title={intl.formatMessage({ id: 'pages.openclaw.instance.basic' })}>\n                <Descriptions column={{ xs: 1, sm: 1, md: 2, lg: 3 }}>\n                  <Descriptions.Item label={intl.formatMessage({ id: 'pages.dashboard.field.namespace' })}>\n                    {instance.namespace || '-'}\n                  </Descriptions.Item>\n                  <Descriptions.Item label={intl.formatMessage({ id: 'pages.openclaw.field.displayName' })}>\n                    {instance.displayName || instance.name || '-'}\n                  </Descriptions.Item>\n                  <Descriptions.Item label={intl.formatMessage({ id: 'pages.openclaw.field.ownerUser' })}>\n                    {instance.ownerUsername || instance.ownerEmail || instance.ownerId || '-'}\n                  </Descriptions.Item>\n                  <Descriptions.Item label={intl.formatMessage({ id: 'pages.openclaw.field.purpose' })}>\n                    {instance.purpose || '-'}\n                  </Descriptions.Item>\n                  <Descriptions.Item label={intl.formatMessage({ id: 'pages.openclaw.field.provider' })}>\n                    {normalizeProvider(instance.provider) || intl.formatMessage({ id: 'pages.openclaw.value.unknown' })}\n                  </Descriptions.Item>\n                  <Descriptions.Item label={intl.formatMessage({ id: 'pages.openclaw.field.memory' })}>\n                    {formatBytes(instance.memoryBytes)}\n                  </Descriptions.Item>\n                  <Descriptions.Item label={intl.formatMessage({ id: 'pages.openclaw.field.tokens' })}>\n                    {`${formatNumber(instance.inputTokens24h, 0)} / ${formatNumber(instance.outputTokens24h, 0)}`}\n                  </Descriptions.Item>\n                  <Descriptions.Item label={intl.formatMessage({ id: 'pages.openclaw.field.cost' })}>\n                    {formatNumber(instance.costUSD24h, 4)}\n                  </Descriptions.Item>\n                  <Descriptions.Item label={intl.formatMessage({ id: 'pages.dashboard.field.updatedAt' })}>\n                    {instance.updatedAt || '-'}\n                  </Descriptions.Item>\n                </Descriptions>\n              </Card>\n\n              <Card className={styles.detailCard} title={intl.formatMessage({ id: 'pages.openclaw.instance.runtime' })}>\n                <Descriptions column={{ xs: 1, sm: 1, md: 2, lg: 3 }}>\n                  <Descriptions.Item label={intl.formatMessage({ id: 'pages.openclaw.instance.runtime.status' })}>\n                    <Tag color={statusColor(runtime?.statusState)}>{runtime?.statusState || '-'}</Tag>\n                  </Descriptions.Item>\n                  <Descriptions.Item label={intl.formatMessage({ id: 'pages.openclaw.instance.runtime.gateway' })}>\n                    <Tag color={statusColor(runtime?.gatewayState)}>{runtime?.gatewayState || '-'}</Tag>\n                  </Descriptions.Item>\n                  <Descriptions.Item label={intl.formatMessage({ id: 'pages.openclaw.instance.runtime.security' })}>\n                    <Tag color={statusColor(runtime?.securityState)}>{runtime?.securityState || '-'}</Tag>\n                  </Descriptions.Item>\n                  <Descriptions.Item label={intl.formatMessage({ id: 'pages.openclaw.instance.runtime.version' })}>\n                    {runtime?.runtimeVersion || '-'}\n                  </Descriptions.Item>\n                  <Descriptions.Item label={intl.formatMessage({ id: 'pages.openclaw.instance.runtime.workspace' })}>\n                    {runtime?.openclawWorkspace || '-'}\n                  </Descriptions.Item>\n                  <Descriptions.Item label={intl.formatMessage({ id: 'pages.openclaw.instance.runtime.model' })}>\n                    {runtime?.openclawPrimaryModel || '-'}\n                  </Descriptions.Item>\n                  <Descriptions.Item label={intl.formatMessage({ id: 'pages.openclaw.instance.runtime.agents' })}>\n                    {formatNumber(runtime?.openclawAgentsCount, 0)}\n                  </Descriptions.Item>\n                  <Descriptions.Item label={intl.formatMessage({ id: 'pages.openclaw.instance.runtime.providers' })}>\n                    {formatNumber(runtime?.openclawProvidersCount, 0)}\n                  </Descriptions.Item>\n                  <Descriptions.Item label={intl.formatMessage({ id: 'pages.openclaw.instance.runtime.cron' })}>\n                    {formatNumber(runtime?.cronJobsCount, 0)}\n                  </Descriptions.Item>\n                  <Descriptions.Item label={intl.formatMessage({ id: 'pages.openclaw.instance.runtime.sessionIndexes' })}>\n                    {formatNumber(runtime?.sessionIndexFilesCount, 0)}\n                  </Descriptions.Item>\n                  <Descriptions.Item label={intl.formatMessage({ id: 'pages.openclaw.instance.runtime.disableAuth' })}>\n                    {runtime?.controlUiDisableDeviceAuth === undefined\n                      ? '-'\n                      : runtime.controlUiDisableDeviceAuth\n                        ? intl.formatMessage({ id: 'pages.openclaw.value.yes' })\n                        : intl.formatMessage({ id: 'pages.openclaw.value.no' })}\n                  </Descriptions.Item>\n                  <Descriptions.Item label={intl.formatMessage({ id: 'pages.openclaw.instance.runtime.allowedOrigins' })}>\n                    {(runtime?.controlUiAllowedOrigins || []).length > 0\n                      ? (runtime?.controlUiAllowedOrigins || []).join(', ')\n                      : '-'}\n                  </Descriptions.Item>\n                  <Descriptions.Item label={intl.formatMessage({ id: 'pages.openclaw.instance.runtime.source' })}>\n                    {runtime?.sourcePod && runtime?.sourceContainer\n                      ? `${runtime.sourcePod}/${runtime.sourceContainer}`\n                      : runtime?.sourcePod || '-'}\n                  </Descriptions.Item>\n                  <Descriptions.Item label={intl.formatMessage({ id: 'pages.openclaw.instance.runtime.collectedAt' })}>\n                    {runtime?.collectedAt || '-'}\n                  </Descriptions.Item>\n                  <Descriptions.Item\n                    label={intl.formatMessage({ id: 'pages.openclaw.instance.runtime.lastError' })}\n                    span={2}\n                  >\n                    {runtime?.lastError || '-'}\n                  </Descriptions.Item>\n                </Descriptions>\n              </Card>\n            </>\n          )}\n        </Spin>\n      </div>\n    </PageContainer>\n  );\n};\n\nexport default OpenClawInstanceDetailPage;\n",
+      "__isJSFile": true,
+      "__absFile": "/Users/cloudy/Documents/efucloud/cloud-claw-manager/web/src/pages/openclaw/instance-detail.tsx"
+    },
+    "6": {
       "path": "/admin/dashboard",
       "menuRender": false,
       "access": "adminAccess",
       "file": "@/pages/openclaw/admin-dashboard.tsx",
       "parentId": "ant-design-pro-layout",
-      "id": "4",
+      "id": "6",
       "absPath": "/admin/dashboard",
-      "__content": "import { openclawDashboard } from '@/services/openclaw.api';\nimport { PageContainer } from '@ant-design/pro-components';\nimport { useIntl } from '@umijs/max';\nimport { Card, Col, Empty, Row, Space, Spin, Statistic, Table, Tag, message } from 'antd';\nimport React, { useCallback, useEffect, useMemo, useState } from 'react';\nimport type { DashboardResponse } from './types';\nimport styles from './dashboard.less';\n\nconst toNumber = (value?: number) => Number(value || 0);\nconst normalizeProvider = (value?: string) => {\n  const text = String(value || '').trim();\n  if (!text || text.toLowerCase() === 'unknown') {\n    return '';\n  }\n  return text;\n};\nconst normalizeUrlHost = (value?: string) => {\n  const text = String(value || '').trim();\n  if (!text) {\n    return '';\n  }\n  try {\n    return new URL(text).host || text;\n  } catch (_error) {\n    return text;\n  }\n};\n\nconst OpenClawAdminDashboardPage: React.FC = () => {\n  const intl = useIntl();\n  const [loading, setLoading] = useState<boolean>(false);\n  const [data, setData] = useState<DashboardResponse>({});\n\n  const loadData = useCallback(async () => {\n    setLoading(true);\n    try {\n      const resp = await openclawDashboard<DashboardResponse>();\n      const payload = (resp as any)?.data || resp;\n      setData(payload || {});\n    } catch (_error) {\n      message.error(intl.formatMessage({ id: 'pages.openclaw.dashboard.load.failed' }));\n    } finally {\n      setLoading(false);\n    }\n  }, [intl]);\n\n  useEffect(() => {\n    void loadData();\n  }, [loadData]);\n\n  const instanceRows = data.instances || [];\n  const totalInstances =\n    data.overview?.totalInstances === undefined\n      ? instanceRows.length\n      : toNumber(data.overview?.totalInstances);\n  const accessibleInstances =\n    data.overview?.accessibleInstances === undefined\n      ? instanceRows.filter((row) => Boolean(row.accessible)).length\n      : toNumber(data.overview?.accessibleInstances);\n  const runningInstances = useMemo(\n    () =>\n      instanceRows.filter(\n        (row) => Number(row.readyPods || 0) > 0 && Boolean(String(row.endpoint || '').trim()),\n      ).length,\n    [instanceRows],\n  );\n  const providerTags = useMemo(() => {\n    const breakdown = new Map<string, number>();\n    const providers = data.providers || [];\n    if (providers.length > 0) {\n      providers.forEach((item) => {\n        const key = normalizeProvider(item.provider) || 'unknown';\n        breakdown.set(key, toNumber(breakdown.get(key)) + toNumber(item.requests));\n      });\n    } else {\n      instanceRows.forEach((item) => {\n        const key = normalizeProvider(item.provider) || 'unknown';\n        breakdown.set(key, toNumber(breakdown.get(key)) + 1);\n      });\n    }\n    return Array.from(breakdown.entries())\n      .map(([provider, requests]) => ({ provider, requests }))\n      .sort((a, b) => b.requests - a.requests)\n      .slice(0, 8);\n  }, [data.providers, instanceRows]);\n\n  return (\n    <PageContainer\n      title={intl.formatMessage({ id: 'pages.openclaw.admin.title' })}\n    >\n      <div className={styles.wrapper}>\n        <Spin spinning={loading}>\n          {instanceRows.length === 0 ? (\n            <div className={styles.emptyWrap}>\n              <Empty description={intl.formatMessage({ id: 'pages.openclaw.dashboard.empty.desc' })} />\n            </div>\n          ) : (\n            <>\n              <Row gutter={[16, 16]} className={styles.statRow}>\n                <Col xs={12} sm={12} md={8} lg={6} xl={6}>\n                  <Card>\n                    <Statistic\n                      title={intl.formatMessage({ id: 'pages.openclaw.kpi.instances' })}\n                      value={totalInstances}\n                    />\n                  </Card>\n                </Col>\n                <Col xs={12} sm={12} md={8} lg={6} xl={6}>\n                  <Card>\n                    <Statistic\n                      title={intl.formatMessage({ id: 'pages.openclaw.kpi.accessible' })}\n                      value={accessibleInstances}\n                    />\n                  </Card>\n                </Col>\n                <Col xs={12} sm={12} md={8} lg={6} xl={6}>\n                  <Card>\n                    <Statistic\n                      title={intl.formatMessage({ id: 'pages.openclaw.kpi.ready' })}\n                      value={runningInstances}\n                    />\n                  </Card>\n                </Col>\n              </Row>\n\n              <Card size=\"small\" title={intl.formatMessage({ id: 'pages.openclaw.providers' })} className={styles.providerCard}>\n                <Space wrap>\n                  {providerTags.length === 0 ? (\n                    <Tag>{intl.formatMessage({ id: 'pages.openclaw.value.unknown' })}</Tag>\n                  ) : (\n                    providerTags.map((item) => (\n                      <Tag key={item.provider}>\n                        {normalizeProvider(item.provider) ||\n                          intl.formatMessage({ id: 'pages.openclaw.value.unknown' })}\n                        : {toNumber(item.requests).toFixed(0)}\n                      </Tag>\n                    ))\n                  )}\n                </Space>\n              </Card>\n\n              <Card className={styles.tableCard} bodyStyle={{ padding: 0 }}>\n                <Table\n                  rowKey={(row) => `${row.namespace || 'ns'}-${row.name || 'name'}`}\n                  dataSource={instanceRows}\n                  pagination={{ pageSize: 10 }}\n                  columns={[\n                    {\n                      title: intl.formatMessage({ id: 'pages.dashboard.field.namespace' }),\n                      dataIndex: 'namespace',\n                      width: 140,\n                    },\n                    {\n                      title: intl.formatMessage({ id: 'pages.openclaw.field.displayName' }),\n                      render: (_, row) => row.displayName || row.name || '-',\n                      width: 180,\n                    },\n                    {\n                      title: intl.formatMessage({ id: 'pages.openclaw.field.ownerUser' }),\n                      render: (_, row) => row.ownerUsername || row.ownerEmail || row.ownerId || '-',\n                    },\n                    {\n                      title: intl.formatMessage({ id: 'pages.openclaw.field.provider' }),\n                      width: 260,\n                      render: (_, row) => {\n                        const provider =\n                          normalizeProvider(row.provider) ||\n                          intl.formatMessage({ id: 'pages.openclaw.value.unknown' });\n                        const detailParts: string[] = [];\n                        if (row.providerPrimary) {\n                          detailParts.push(`primary: ${row.providerPrimary}`);\n                        }\n                        if ((row.providerModelIds || []).length > 0) {\n                          detailParts.push(`models: ${(row.providerModelIds || []).join(', ')}`);\n                        }\n                        if (row.providerApiType) {\n                          detailParts.push(`api: ${row.providerApiType}`);\n                        }\n                        const host = normalizeUrlHost(row.providerBaseUrl);\n                        if (host) {\n                          detailParts.push(`base: ${host}`);\n                        }\n                        return (\n                          <div>\n                            <div>{provider}</div>\n                            {detailParts.length > 0 && (\n                              <div className={styles.providerMeta}>{detailParts.join(' | ')}</div>\n                            )}\n                          </div>\n                        );\n                      },\n                    },\n                    {\n                      title: intl.formatMessage({ id: 'pages.dashboard.state.ready' }),\n                      width: 100,\n                      render: (_, row) =>\n                        (Number(row.readyPods || 0) > 0 && Boolean(String(row.endpoint || '').trim())) ? (\n                          <Tag color=\"success\">{intl.formatMessage({ id: 'pages.openclaw.value.yes' })}</Tag>\n                        ) : (\n                          <Tag>{intl.formatMessage({ id: 'pages.openclaw.value.no' })}</Tag>\n                        ),\n                    },\n                  ]}\n                />\n              </Card>\n            </>\n          )}\n        </Spin>\n      </div>\n    </PageContainer>\n  );\n};\n\nexport default OpenClawAdminDashboardPage;\n",
+      "__content": "import { openclawDashboard } from '@/services/openclaw.api';\nimport { EyeOutlined } from '@ant-design/icons';\nimport { PageContainer } from '@ant-design/pro-components';\nimport { history, useIntl } from '@umijs/max';\nimport { Button, Card, Col, Empty, Row, Space, Spin, Statistic, Table, Tag, message } from 'antd';\nimport React, { useCallback, useEffect, useMemo, useState } from 'react';\nimport { normalizeProvider, normalizeUrlHost, toNumber } from './format';\nimport type { DashboardResponse } from './types';\nimport styles from './dashboard.less';\n\nconst OpenClawAdminDashboardPage: React.FC = () => {\n  const intl = useIntl();\n  const [loading, setLoading] = useState<boolean>(false);\n  const [data, setData] = useState<DashboardResponse>({});\n\n  const loadData = useCallback(async () => {\n    setLoading(true);\n    try {\n      const resp = await openclawDashboard<DashboardResponse>({ includeGatewayToken: false });\n      const payload = (resp as any)?.data || resp;\n      setData(payload || {});\n    } catch (_error) {\n      message.error(intl.formatMessage({ id: 'pages.openclaw.dashboard.load.failed' }));\n    } finally {\n      setLoading(false);\n    }\n  }, [intl]);\n\n  useEffect(() => {\n    void loadData();\n  }, [loadData]);\n\n  const instanceRows = data.instances || [];\n  const totalInstances =\n    data.overview?.totalInstances === undefined\n      ? instanceRows.length\n      : toNumber(data.overview?.totalInstances);\n  const accessibleInstances =\n    data.overview?.accessibleInstances === undefined\n      ? instanceRows.filter((row) => Boolean(row.accessible)).length\n      : toNumber(data.overview?.accessibleInstances);\n  const runningInstances = useMemo(\n    () =>\n      instanceRows.filter(\n        (row) => Number(row.readyPods || 0) > 0 && Boolean(String(row.endpoint || '').trim()),\n      ).length,\n    [instanceRows],\n  );\n  const providerTags = useMemo(() => {\n    const breakdown = new Map<string, number>();\n    const providers = data.providers || [];\n    if (providers.length > 0) {\n      providers.forEach((item) => {\n        const key = normalizeProvider(item.provider) || 'unknown';\n        breakdown.set(key, toNumber(breakdown.get(key)) + toNumber(item.requests));\n      });\n    } else {\n      instanceRows.forEach((item) => {\n        const key = normalizeProvider(item.provider) || 'unknown';\n        breakdown.set(key, toNumber(breakdown.get(key)) + 1);\n      });\n    }\n    return Array.from(breakdown.entries())\n      .map(([provider, requests]) => ({ provider, requests }))\n      .sort((a, b) => b.requests - a.requests)\n      .slice(0, 8);\n  }, [data.providers, instanceRows]);\n\n  return (\n    <PageContainer\n      title={intl.formatMessage({ id: 'pages.openclaw.admin.title' })}\n    >\n      <div className={styles.wrapper}>\n        <Spin spinning={loading}>\n          {instanceRows.length === 0 ? (\n            <div className={styles.emptyWrap}>\n              <Empty description={intl.formatMessage({ id: 'pages.openclaw.dashboard.empty.desc' })} />\n            </div>\n          ) : (\n            <>\n              <Row gutter={[16, 16]} className={styles.statRow}>\n                <Col xs={12} sm={12} md={8} lg={6} xl={6}>\n                  <Card>\n                    <Statistic\n                      title={intl.formatMessage({ id: 'pages.openclaw.kpi.instances' })}\n                      value={totalInstances}\n                    />\n                  </Card>\n                </Col>\n                <Col xs={12} sm={12} md={8} lg={6} xl={6}>\n                  <Card>\n                    <Statistic\n                      title={intl.formatMessage({ id: 'pages.openclaw.kpi.accessible' })}\n                      value={accessibleInstances}\n                    />\n                  </Card>\n                </Col>\n                <Col xs={12} sm={12} md={8} lg={6} xl={6}>\n                  <Card>\n                    <Statistic\n                      title={intl.formatMessage({ id: 'pages.openclaw.kpi.ready' })}\n                      value={runningInstances}\n                    />\n                  </Card>\n                </Col>\n              </Row>\n\n              <Card size=\"small\" title={intl.formatMessage({ id: 'pages.openclaw.providers' })} className={styles.providerCard}>\n                <Space wrap>\n                  {providerTags.length === 0 ? (\n                    <Tag>{intl.formatMessage({ id: 'pages.openclaw.value.unknown' })}</Tag>\n                  ) : (\n                    providerTags.map((item) => (\n                      <Tag key={item.provider}>\n                        {normalizeProvider(item.provider) ||\n                          intl.formatMessage({ id: 'pages.openclaw.value.unknown' })}\n                        : {toNumber(item.requests).toFixed(0)}\n                      </Tag>\n                    ))\n                  )}\n                </Space>\n              </Card>\n\n              <Card className={styles.tableCard} bodyStyle={{ padding: 0 }}>\n                <Table\n                  rowKey={(row) => `${row.namespace || 'ns'}-${row.name || 'name'}`}\n                  dataSource={instanceRows}\n                  pagination={{ pageSize: 10 }}\n                  columns={[\n                    {\n                      title: intl.formatMessage({ id: 'pages.dashboard.field.namespace' }),\n                      dataIndex: 'namespace',\n                      width: 140,\n                    },\n                    {\n                      title: intl.formatMessage({ id: 'pages.openclaw.field.displayName' }),\n                      render: (_, row) => row.displayName || row.name || '-',\n                      width: 180,\n                    },\n                    {\n                      title: intl.formatMessage({ id: 'pages.openclaw.field.ownerUser' }),\n                      render: (_, row) => row.ownerUsername || row.ownerEmail || row.ownerId || '-',\n                    },\n                    {\n                      title: intl.formatMessage({ id: 'pages.openclaw.field.provider' }),\n                      width: 260,\n                      render: (_, row) => {\n                        const provider =\n                          normalizeProvider(row.provider) ||\n                          intl.formatMessage({ id: 'pages.openclaw.value.unknown' });\n                        const detailParts: string[] = [];\n                        if (row.providerPrimary) {\n                          detailParts.push(`primary: ${row.providerPrimary}`);\n                        }\n                        if ((row.providerModelIds || []).length > 0) {\n                          detailParts.push(`models: ${(row.providerModelIds || []).join(', ')}`);\n                        }\n                        if (row.providerApiType) {\n                          detailParts.push(`api: ${row.providerApiType}`);\n                        }\n                        const host = normalizeUrlHost(row.providerBaseUrl);\n                        if (host) {\n                          detailParts.push(`base: ${host}`);\n                        }\n                        return (\n                          <div>\n                            <div>{provider}</div>\n                            {detailParts.length > 0 && (\n                              <div className={styles.providerMeta}>{detailParts.join(' | ')}</div>\n                            )}\n                          </div>\n                        );\n                      },\n                    },\n                    {\n                      title: intl.formatMessage({ id: 'pages.dashboard.state.ready' }),\n                      width: 100,\n                      render: (_, row) =>\n                        (Number(row.readyPods || 0) > 0 && Boolean(String(row.endpoint || '').trim())) ? (\n                          <Tag color=\"success\">{intl.formatMessage({ id: 'pages.openclaw.value.yes' })}</Tag>\n                        ) : (\n                          <Tag>{intl.formatMessage({ id: 'pages.openclaw.value.no' })}</Tag>\n                        ),\n                    },\n                    {\n                      title: intl.formatMessage({ id: 'pages.operation' }),\n                      width: 120,\n                      render: (_, row) => {\n                        const detailPath = `/openclaw/instance/${encodeURIComponent(\n                          String(row.namespace || ''),\n                        )}/${encodeURIComponent(String(row.name || ''))}`;\n                        return (\n                          <Button\n                            size=\"small\"\n                            icon={<EyeOutlined />}\n                            disabled={!row.namespace || !row.name}\n                            onClick={() => history.push(detailPath)}\n                          >\n                            {intl.formatMessage({ id: 'pages.openclaw.action.view' })}\n                          </Button>\n                        );\n                      },\n                    },\n                  ]}\n                />\n              </Card>\n            </>\n          )}\n        </Spin>\n      </div>\n    </PageContainer>\n  );\n};\n\nexport default OpenClawAdminDashboardPage;\n",
       "__isJSFile": true,
       "__absFile": "/Users/cloudy/Documents/efucloud/cloud-claw-manager/web/src/pages/openclaw/admin-dashboard.tsx"
     },
-    "5": {
+    "7": {
       "path": "/login",
       "menuRender": false,
       "hideInMenu": true,
       "layout": false,
       "file": "@/pages/oauth/login.tsx",
-      "id": "5",
+      "id": "7",
       "absPath": "/login",
       "__content": "import { PageContainer } from '@ant-design/pro-components';\nimport { nanoid } from 'nanoid';\nimport React, { useEffect, useState } from 'react';\nimport { Footer } from '@/components';\nimport type { OidcConfig } from '@/services/common.d';\nimport { getAuthorizeInfo } from '@/services/oauth.api';\nimport { getToken } from '@/utils/global';\n\nconst LoginIndex: React.FC = () => {\n  const [oauthConfig, setOauthConfig] = useState<OidcConfig>();\n  const getCode = async () => {\n    const res = (await getAuthorizeInfo()) as OidcConfig;\n    setOauthConfig(res);\n  };\n  useEffect(() => {\n    getCode();\n  }, []);\n  useEffect(() => {\n    const token = getToken();\n    if (token.access_token) {\n      window.location.href = '/dashboard';\n    } else if (oauthConfig) {\n      const redirect_uri = `${window.location.origin}/oauth/callback`;\n      const state = nanoid(20);\n      window.location.href = `${oauthConfig.issuer}/oauth/authorize?redirect_uri=${redirect_uri}&client_id=${oauthConfig.clientId}&response_type=code&state=${state}`;\n    }\n  }, [oauthConfig]);\n  return (\n    <PageContainer>\n      <div></div>\n      <Footer />\n    </PageContainer>\n  );\n};\n\nexport default LoginIndex;\n",
       "__isJSFile": true,
       "__absFile": "/Users/cloudy/Documents/efucloud/cloud-claw-manager/web/src/pages/oauth/login.tsx"
     },
-    "6": {
+    "8": {
       "name": "callback",
       "layout": false,
       "path": "/oauth/callback",
       "file": "@/pages/oauth/callback.tsx",
-      "id": "6",
+      "id": "8",
       "absPath": "/oauth/callback",
       "__content": "import { PageContainer } from '@ant-design/pro-components';\nimport { createStyles } from 'antd-style';\nimport React, { useEffect } from 'react';\nimport { Footer } from '@/components';\nimport type { AccessTokenResponse, LoginByOIDC } from '@/services/common.d';\nimport { loginByOidc } from '@/services/oauth.api';\nimport { addToken, getSearchParams } from '@/utils/global';\n\nconst useStyles = createStyles(({ token }) => {\n  return {\n    container: {\n      display: 'flex',\n      flexDirection: 'column',\n      height: '100vh',\n      overflow: 'auto',\n      backgroundColor: token.colorBgContainer,\n    },\n  };\n});\n\nconst OAuthCallback: React.FC = () => {\n  const { styles } = useStyles();\n  const code = getSearchParams().get('code') as string;\n  const login = async () => {\n    const loginParam = {} as LoginByOIDC;\n    loginParam.code = code;\n    loginParam.redirectUri = window.location.origin + window.location.pathname;\n    const token = (await loginByOidc(loginParam)) as AccessTokenResponse;\n    addToken(token);\n    window.location.href = '/dashboard';\n  };\n\n  useEffect(() => {\n    login();\n  }, []);\n  return (\n    <PageContainer>\n      <div className={styles.container}></div>\n      <Footer />\n    </PageContainer>\n  );\n};\n\nexport default OAuthCallback;\n",
       "__isJSFile": true,
       "__absFile": "/Users/cloudy/Documents/efucloud/cloud-claw-manager/web/src/pages/oauth/callback.tsx"
     },
-    "7": {
+    "9": {
       "path": "/*",
       "file": "@/pages/404.tsx",
       "parentId": "ant-design-pro-layout",
-      "id": "7",
+      "id": "9",
       "absPath": "/*",
       "__content": "import { history, useIntl } from '@umijs/max';\nimport { Button, Result } from 'antd';\nimport React from 'react';\n\nconst NoFoundPage: React.FC = () => (\n  <Result\n    status=\"404\"\n    title=\"404\"\n    subTitle={useIntl().formatMessage({ id: 'pages.404.subTitle' })}\n    extra={\n      <>\n        <Button type=\"primary\" onClick={() => window.history.back()}>\n          {useIntl().formatMessage({ id: 'pages.404.go.history' })}\n        </Button>\n        <Button type=\"primary\" onClick={() => history.push('/')}>\n          {useIntl().formatMessage({ id: 'pages.404.buttonText' })}\n        </Button>\n      </>\n    }\n  />\n);\n\nexport default NoFoundPage;\n",
       "__isJSFile": true,

@@ -19,7 +19,7 @@ stringData:
       clientSecret: REPLACE_ME_OIDC_CLIENT_SECRET
       issuer: https://eauth.efucloud.com
     openClawControl:
-      previewBaseDomain: openclawefucloud.com
+      previewBaseDomain: openclaw.efucloud.com
       adminEmails:
         - admin@efucloud.com
       ingressEnabled: true
@@ -27,7 +27,7 @@ stringData:
       ingressPath: /
       ingressPathType: Prefix
       ingressTlsEnabled: true
-      ingressTlsSecretName: openclawefucloud-com-tls
+      ingressTlsSecretName: openclaw-efucloud-com-tls
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -46,6 +46,9 @@ rules:
   - apiGroups: [""]
     resources: ["configmaps", "secrets", "services", "serviceaccounts", "persistentvolumeclaims", "pods"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete", "deletecollection"]
+  - apiGroups: [""]
+    resources: ["pods/exec"]
+    verbs: ["create"]
   - apiGroups: ["apps"]
     resources: ["deployments", "statefulsets", "daemonsets", "replicasets"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete", "deletecollection"]
@@ -100,7 +103,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: cloud-claw-manager
-          image: ghcr.io/efucloud/cloud-claw-manager:latest
+          image: ghcr.io/efucloud/cloud-claw-manager:sha-572fbd2
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -176,7 +179,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: dashboard.openclaw.openclawefucloud.com
+    - host: dashboard.openclaw.efucloud.com
       http:
         paths:
           - path: /
@@ -188,5 +191,5 @@ spec:
                   number: 9008
   tls:
     - hosts:
-        - dashboard.openclaw.openclawefucloud.com
-      secretName: openclawefucloud-com-tls
+        - dashboard.openclaw.efucloud.com
+      secretName: openclaw-efucloud-com-tls

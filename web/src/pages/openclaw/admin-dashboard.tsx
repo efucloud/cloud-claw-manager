@@ -1,30 +1,12 @@
 import { openclawDashboard } from '@/services/openclaw.api';
+import { EyeOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-components';
-import { useIntl } from '@umijs/max';
-import { Card, Col, Empty, Row, Space, Spin, Statistic, Table, Tag, message } from 'antd';
+import { history, useIntl } from '@umijs/max';
+import { Button, Card, Col, Empty, Row, Space, Spin, Statistic, Table, Tag, message } from 'antd';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { normalizeProvider, normalizeUrlHost, toNumber } from './format';
 import type { DashboardResponse } from './types';
 import styles from './dashboard.less';
-
-const toNumber = (value?: number) => Number(value || 0);
-const normalizeProvider = (value?: string) => {
-  const text = String(value || '').trim();
-  if (!text || text.toLowerCase() === 'unknown') {
-    return '';
-  }
-  return text;
-};
-const normalizeUrlHost = (value?: string) => {
-  const text = String(value || '').trim();
-  if (!text) {
-    return '';
-  }
-  try {
-    return new URL(text).host || text;
-  } catch (_error) {
-    return text;
-  }
-};
 
 const OpenClawAdminDashboardPage: React.FC = () => {
   const intl = useIntl();
@@ -199,6 +181,25 @@ const OpenClawAdminDashboardPage: React.FC = () => {
                         ) : (
                           <Tag>{intl.formatMessage({ id: 'pages.openclaw.value.no' })}</Tag>
                         ),
+                    },
+                    {
+                      title: intl.formatMessage({ id: 'pages.operation' }),
+                      width: 120,
+                      render: (_, row) => {
+                        const detailPath = `/openclaw/instance/${encodeURIComponent(
+                          String(row.namespace || ''),
+                        )}/${encodeURIComponent(String(row.name || ''))}`;
+                        return (
+                          <Button
+                            size="small"
+                            icon={<EyeOutlined />}
+                            disabled={!row.namespace || !row.name}
+                            onClick={() => history.push(detailPath)}
+                          >
+                            {intl.formatMessage({ id: 'pages.openclaw.action.view' })}
+                          </Button>
+                        );
+                      },
                     },
                   ]}
                 />
