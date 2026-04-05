@@ -35,7 +35,7 @@ dist/
 /docs/certs/
 /build.sh
 /Dockerfile.local
-
+pkg/embeds/web/*
 # ------------------------------
 # Frontend (web/)
 # ------------------------------

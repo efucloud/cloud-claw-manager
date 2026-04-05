@@ -6,6 +6,7 @@ Repository: [github.com/efucloud/cloud-claw-manager](https://github.com/efucloud
 
 ## Overview
 
+![preview](./images/preview.png)
 Cloud Claw Manager is a Kubernetes-oriented management platform for OpenClaw instances.  
 It helps teams deliver enterprise AI assistant instances in a standardized, auditable, and scalable way.
 

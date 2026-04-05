@@ -5,7 +5,7 @@
 仓库地址：[github.com/efucloud/cloud-claw-manager](https://github.com/efucloud/cloud-claw-manager)
 
 ## 项目简介
-
+![preview](./images/preview.png)
 Cloud Claw Manager 是一个面向 Kubernetes 的 OpenClaw 实例管理平台。  
 项目目标是以标准化、可审计、可扩展的方式，帮助团队交付企业级 AI 助手实例。
 
