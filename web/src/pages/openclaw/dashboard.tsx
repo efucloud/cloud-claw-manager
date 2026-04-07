@@ -1,5 +1,5 @@
 import { openclawDashboard } from '@/services/openclaw.api';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, ReloadOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-components';
 import { history, useIntl, useLocation } from '@umijs/max';
 import { Button, Card, Col, Empty, Row, Spin, Statistic, message } from 'antd';
@@ -61,6 +61,9 @@ const OpenClawDashboardPage: React.FC = () => {
     <PageContainer
       title={false}
       extra={[
+        <Button key="refresh" icon={<ReloadOutlined />} loading={loading} onClick={() => void loadData()}>
+          {intl.formatMessage({ id: 'pages.operation.refresh' })}
+        </Button>,
         <Button key="user-stats" onClick={() => history.push('/dashboard/stats')}>
           {intl.formatMessage({ id: 'pages.openclaw.action.userStats' })}
         </Button>,
